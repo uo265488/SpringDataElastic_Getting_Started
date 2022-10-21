@@ -1,6 +1,5 @@
 co/empathy/academy/search/config/ElasticsearchConfiguration.class
 co/empathy/academy/search/services/ElasticService.class
 co/empathy/academy/search/controllers/ElasticController.class
-co/empathy/academy/search/config/LowClientConfig.class
 co/empathy/academy/search/config/RestClientConfig.class
 co/empathy/academy/search/SearchApplication.class

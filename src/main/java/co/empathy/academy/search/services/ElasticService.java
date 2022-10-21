@@ -1,6 +1,6 @@
 package co.empathy.academy.search.services;
 
-import co.empathy.academy.search.config.LowClientConfig;
+import co.empathy.academy.search.config.LowRestClientConfig;
 import org.apache.http.util.EntityUtils;
 import org.elasticsearch.client.Request;
 import org.elasticsearch.client.Response;
@@ -13,14 +13,17 @@ import java.io.IOException;
 public class ElasticService {
 
     @Autowired
-    private LowClientConfig lowClientConfig;
+    private LowRestClientConfig lowClientConfig;
 
-    public String performRequestToLowLevelClient(String endpoint) throws IOException {
-
-        Response report =
-                lowClientConfig.lowRestClient().performRequest(new Request("GET", endpoint));
-
-
-        return EntityUtils.toString(report.getEntity());
+    public String getElasticEndpointReport(String endpoint)  {
+        String report;
+        try {
+            Response response=
+                    lowClientConfig.lowRestClient().performRequest(new Request("GET", endpoint));
+            report = EntityUtils.toString(response.getEntity());
+        } catch (IOException e) {
+            throw new RuntimeException("IOException from the Low Rest Client. ");
+        }
+        return report;
     }
 }

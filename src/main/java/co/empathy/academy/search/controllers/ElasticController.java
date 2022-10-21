@@ -22,9 +22,9 @@ public class ElasticController {
     }
 
     @GetMapping("/search")
-    public String search(@RequestParam String query) throws IOException {
+    public String search(@RequestParam String query) {
 
-        String version = elasticService.performRequestToLowLevelClient("/");
+        String version = elasticService.getElasticEndpointReport("/");
 
         JSONObject json = new JSONObject(version);
 
