@@ -28,7 +28,9 @@ public class ElasticController {
 
         JSONObject json = new JSONObject(version);
 
-        return "{\"query\": " + query + ", \"clusterName\" : " + json.get("version") + "}";
+        JSONObject theVersion = (JSONObject)json.get("version");
+
+        return "{\"query\": " + query + ", \"clusterName\" : " + theVersion.get("number") + "}";
     }
 
 
