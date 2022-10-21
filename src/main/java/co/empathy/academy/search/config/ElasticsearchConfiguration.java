@@ -1,4 +1,4 @@
-package co.empathy.academy.search.elastic;
+package co.empathy.academy.search.config;
 
 import lombok.RequiredArgsConstructor;
 import org.elasticsearch.client.RestHighLevelClient;
