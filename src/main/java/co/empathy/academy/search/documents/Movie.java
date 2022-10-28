@@ -20,6 +20,9 @@ public class Movie {
     @Field(type = FieldType.Text)
     private String title;
 
+    @Field(type = FieldType.Text)
+    private String description;
+
     @Field(type = FieldType.Double)
     private double price;
 
@@ -45,5 +48,12 @@ public class Movie {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -1,9 +1,7 @@
 package co.empathy.academy.search.services;
 
-import co.empathy.academy.search.config.LowRestClientConfig;
+import co.empathy.academy.search.config.ElasticsearchClientConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
 import org.apache.http.entity.ContentType;
 import org.apache.http.nio.entity.NStringEntity;
 import org.apache.http.util.EntityUtils;
@@ -13,15 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Map;
 
 @Service
 public class ElasticService {
 
     @Autowired
-    private LowRestClientConfig lowClientConfig;
+    private ElasticsearchClientConfig lowClientConfig;
 
     public String performGETRequest(String endpoint)  {
         String report;

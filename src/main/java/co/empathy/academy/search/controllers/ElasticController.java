@@ -59,14 +59,10 @@ public class ElasticController {
      */
     @GetMapping("/index/{indexName}")
     public String indexAnyDocument(@PathVariable String indexName) {
-
         Map<String, String> document = new HashMap<>();
         document.put("randomId", UUID.randomUUID().toString());
 
         return elasticService.indexDocument(indexName, document);
     }
-
-
-
 
 }
