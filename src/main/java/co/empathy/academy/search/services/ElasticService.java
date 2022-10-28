@@ -15,14 +15,30 @@ public class ElasticService {
     @Autowired
     private LowRestClientConfig lowClientConfig;
 
-    public String getElasticEndpointReport(String endpoint)  {
+    public String performGETRequest(String endpoint)  {
         String report;
         try {
             Response response=
                     lowClientConfig.lowRestClient().performRequest(new Request("GET", endpoint));
             report = EntityUtils.toString(response.getEntity());
         } catch (IOException e) {
-            throw new RuntimeException("IOException from the Low Rest Client. ");
+            //BETTER APPROACH???? THROW EXCEPTION OR INFORM OF BAD USE
+            //throw new RuntimeException("IOException from the Low Rest Client. ");
+            report = "There is something wrong with your petition. ";
+        }
+        return report;
+    }
+
+    public String performPUTRequest(String index)  {
+        String report;
+        try {
+            Response response=
+                    lowClientConfig.lowRestClient().performRequest(new Request("PUT", index));
+            report = EntityUtils.toString(response.getEntity());
+        } catch (IOException e) {
+            //BETTER APPROACH???? THROW EXCEPTION OR INFORM OF BAD USE
+            //throw new RuntimeException("IOException from the Low Rest Client. ");
+            report = "There is something wrong with your petition. ";
         }
         return report;
     }

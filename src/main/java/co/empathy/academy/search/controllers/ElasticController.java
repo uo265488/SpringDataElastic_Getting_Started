@@ -24,7 +24,7 @@ public class ElasticController {
     @GetMapping("/search")
     public String search(@RequestParam String query) {
 
-        String version = elasticService.getElasticEndpointReport("/");
+        String version = elasticService.performGETRequest("/");
 
         JSONObject json = new JSONObject(version);
 
@@ -33,5 +33,23 @@ public class ElasticController {
         return "{\"query\": " + query + ", \"clusterName\" : " + theVersion.get("number") + "}";
     }
 
+    /**
+     * Performs GET request to /_cat/indices and retrieves de info.
+     * @return report about the indices in the cluster
+     */
+    @GetMapping("/index/info")
+    public String getClusterInformation() {
+        return "health status index       uuid   pri rep docs.count docs.deleted store.size pri.store.size\r\n"
+               + elasticService.performGETRequest("/_cat/indices");
+    }
+
+    /**
+     * Performs GET request for specific index info and retrieves de info.
+     * @return report about the indices in the cluster
+     */
+    @GetMapping("/index/{indexName}")
+    public String getIndexReport(@PathVariable String indexName) {
+        return elasticService.performGETRequest("/" + indexName);
+    }
 
 }
