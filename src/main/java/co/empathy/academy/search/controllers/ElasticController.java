@@ -4,14 +4,16 @@ import co.empathy.academy.search.services.ElasticService;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 @RestController
+@RequestMapping("/api")
 public class ElasticController {
     @Autowired
     private ElasticService elasticService;
@@ -51,5 +53,20 @@ public class ElasticController {
     public String getIndexReport(@PathVariable String indexName) {
         return elasticService.performGETRequest("/" + indexName);
     }
+
+    /**
+     * Indexing a document in a specific index
+     */
+    @GetMapping("/index/{indexName}")
+    public String indexAnyDocument(@PathVariable String indexName) {
+
+        Map<String, String> document = new HashMap<>();
+        document.put("randomId", UUID.randomUUID().toString());
+
+        return elasticService.indexDocument(indexName, document);
+    }
+
+
+
 
 }
