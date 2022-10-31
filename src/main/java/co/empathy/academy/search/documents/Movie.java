@@ -11,8 +11,6 @@ import org.springframework.data.elasticsearch.annotations.Setting;
 @Document(indexName = Indices.MOVIE_INDEX)
 @Setting(settingPath = "static/es-settings.json")
 public class Movie {
-
-
     @Id
     @Field(type = FieldType.Keyword)
     private String id;
