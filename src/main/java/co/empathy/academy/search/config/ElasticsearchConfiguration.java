@@ -19,13 +19,15 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 @Configuration
 @EnableElasticsearchRepositories(basePackages = "co.empathy.academy.search.repositories")
 @ComponentScan(basePackages = {"co.empathy.academy.search"})
-public class ElasticsearchConfiguration extends AbstractElasticsearchConfiguration {
+public class ElasticsearchConfiguration /*extends AbstractElasticsearchConfiguration */{
 
     //DID NOT WORK
     /*@Value("${elasticsearch.url")
     public String elasticsearchurl;*/
 
+    /*
     @Override
+
     @Bean
     public RestHighLevelClient elasticsearchClient() {
         final ClientConfiguration configuration =
@@ -36,6 +38,6 @@ public class ElasticsearchConfiguration extends AbstractElasticsearchConfigurati
 
         return RestClients.create(configuration).rest();
     }
-
+*/
 
 }

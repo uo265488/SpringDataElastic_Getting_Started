@@ -8,50 +8,58 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.data.elasticsearch.annotations.Setting;
 
+import java.util.UUID;
+
 @Document(indexName = Indices.MOVIE_INDEX)
 @Setting(settingPath = "static/es-settings.json")
 public class Movie {
     @Id
     @Field(type = FieldType.Keyword)
-    private String id;
+    private final UUID id;
+
+    @Field(type = FieldType.Integer)
+    private final int ordering;
 
     @Field(type = FieldType.Text)
-    private String title;
+    private final String title;
 
     @Field(type = FieldType.Text)
-    private String description;
+    private final String region;
 
-    @Field(type = FieldType.Double)
-    private double price;
+    @Field(type = FieldType.Text)
+    private final String language;
 
-    public String getId() {
-        return id;
+    @Field(type = FieldType.Text)
+    private final String types;
+
+    @Field(type = FieldType.Text)
+    private final String attributes;
+
+    @Field(type = FieldType.Text)
+    private final boolean isOriginalTitle;
+
+    public Movie(UUID id, int ordering, String title, String region,
+                 String language, String types, String attributes, boolean isOriginalTitle) {
+        this.id = id;
+        this.ordering = ordering;
+        this.title = title;
+        this.region = region;
+        this.language = language;
+        this.types = types;
+        this.attributes = attributes;
+        this.isOriginalTitle = isOriginalTitle;
+
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public UUID getId() {
+        return id;
     }
 
     public String getTitle() {
         return title;
     }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-    public void setDescription(String description) {
-        this.description = description;
+    public Movie withId(UUID uuid) {
+        return new Movie(uuid, this.ordering,
+                this.title, this.region, this.language, this.types, this.attributes, this.isOriginalTitle);
     }
 }

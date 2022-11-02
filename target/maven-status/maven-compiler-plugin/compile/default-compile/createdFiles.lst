@@ -1,9 +1,10 @@
-co/empathy/academy/search/config/ElasticsearchConfiguration.class
 co/empathy/academy/search/services/ElasticService.class
-co/empathy/academy/search/services/MovieService.class
 co/empathy/academy/search/controllers/ElasticController.class
 co/empathy/academy/search/helper/Indices.class
+co/empathy/academy/search/repositories/MovieQueryRepository.class
 co/empathy/academy/search/SearchApplication.class
 co/empathy/academy/search/controllers/MovieController.class
 co/empathy/academy/search/repositories/MovieRepository.class
 co/empathy/academy/search/documents/Movie.class
+co/empathy/academy/search/config/ElasticsearchConfiguration.class
+co/empathy/academy/search/services/MovieService.class
