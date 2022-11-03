@@ -3,11 +3,8 @@ package co.empathy.academy.search.services;
 import co.elastic.clients.elasticsearch.core.IndexResponse;
 import co.empathy.academy.search.config.ElasticsearchClientConfig;
 import co.empathy.academy.search.documents.Movie;
-import co.empathy.academy.search.repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
 
 @Service
 public class MovieService {
@@ -42,7 +39,7 @@ public class MovieService {
         try {
             response = esConfig.getEsClient()
                     .index(i -> i.index("movie")
-                            .id(movie.getId().toString())
+                            .id(""+ movie.getId())
                             .document(movie)
                     );
         } catch (Exception e) {

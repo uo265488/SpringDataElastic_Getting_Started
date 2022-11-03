@@ -1,3 +1,4 @@
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/test/java/co/empathy/academy/search/SearchApplicationTests.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/test/java/co/empathy/academy/search/HelloWorldControllerTest.java
+/Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/test/java/co/empathy/academy/search/repositories/queries/MovieQueryRepositoryTests.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/test/java/co/empathy/academy/search/controllers/ElasticControllerTests.java

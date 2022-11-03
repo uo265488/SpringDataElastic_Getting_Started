@@ -1,10 +1,10 @@
-/Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/config/ElasticsearchConfiguration.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/documents/Movie.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/repositories/MovieRepository.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/controllers/MovieController.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/SearchApplication.java
-/Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/config/LowRestClientConfig.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/controllers/ElasticController.java
+/Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/config/ElasticsearchClientConfig.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/services/ElasticService.java
+/Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/repositories/MovieQueryRepository.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/services/MovieService.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/helper/Indices.java
