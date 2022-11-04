@@ -25,14 +25,14 @@ public class MovieService {
         movies = new HashMap<>();
     }
 
-    public Movie findMovieById(UUID id) {
+    public Movie findMovieById(String id) {
         return movies.get(id);
     }
 
     public Movie saveMovie(Movie movie) {
         UUID id = UUID.randomUUID();
         //To not use setter, avoiding altering state of movie after construction
-        Movie newMovie = movie.withId(id);
+        Movie newMovie = movie.withId(id.toString());
         movies.put(id, newMovie);
         return newMovie;
     }
