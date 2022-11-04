@@ -18,7 +18,7 @@ public class Movie {
     @Field(type = FieldType.Keyword)
     private final String id;
 
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Keyword)
     private final String titleType;
 
     @Field(type = FieldType.Text)
@@ -61,5 +61,52 @@ public class Movie {
 
     public String getId() {
         return this.id;
+    }
+
+    public String getTitleType() {
+        return titleType;
+    }
+
+    public String getPrimaryTitle() {
+        return primaryTitle;
+    }
+
+    public String getOriginalTitle() {
+        return originalTitle;
+    }
+
+    public Boolean getAdult() {
+        return isAdult;
+    }
+
+    public int getStartYear() {
+        return startYear;
+    }
+
+    public int getEndYear() {
+        return endYear;
+    }
+
+    public int getRuntimeMinutes() {
+        return runtimeMinutes;
+    }
+
+    public String getGenres() {
+        return genres;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id='" + id + '\'' +
+                ", titleType='" + titleType + '\'' +
+                ", primaryTitle='" + primaryTitle + '\'' +
+                ", originalTitle='" + originalTitle + '\'' +
+                ", isAdult=" + isAdult +
+                ", startYear=" + startYear +
+                ", endYear=" + endYear +
+                ", runtimeMinutes=" + runtimeMinutes +
+                ", genres='" + genres + '\'' +
+                '}';
     }
 }

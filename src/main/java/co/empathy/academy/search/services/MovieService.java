@@ -1,16 +1,19 @@
 package co.empathy.academy.search.services;
 
-import co.elastic.clients.elasticsearch.core.BulkRequest;
-import co.elastic.clients.elasticsearch.core.BulkResponse;
-import co.elastic.clients.elasticsearch.core.IndexResponse;
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.core.*;
 import co.elastic.clients.elasticsearch.core.bulk.BulkResponseItem;
 import co.empathy.academy.search.config.ElasticsearchClientConfig;
 import co.empathy.academy.search.documents.Movie;
+import co.empathy.academy.search.helper.Indices;
+import org.elasticsearch.xcontent.XContentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Service
 public class MovieService {
@@ -55,18 +58,19 @@ public class MovieService {
         return "" + response.version();
     }
 
-    public List<Movie> bulkIndexing(List<Movie> movieList) {
+    public List<Movie> synchronousBulkIndexing(List<Movie> movieList) {
 
         BulkRequest.Builder br = new BulkRequest.Builder();
 
         for (Movie movie : movieList) {
             br.operations(op -> op
                     .index(idx -> idx
-                            .index("movies")
+                            .index(Indices.MOVIE_INDEX)
                             .id(movie.getId())
                             .document(movie)
                     )
             );
+            Logger.getLogger(this.getClass().getName()).log(Level.INFO, movie.toString());
         }
         BulkResponse result;
         try {
@@ -74,10 +78,11 @@ public class MovieService {
         } catch (IOException e) {
             throw new RuntimeException(e.getCause());
         }
-
         if (result.errors()) {
             return new ArrayList<>();
         }
+
         return movieList;
     }
+
 }
