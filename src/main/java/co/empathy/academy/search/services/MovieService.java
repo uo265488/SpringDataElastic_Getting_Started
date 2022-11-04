@@ -63,7 +63,7 @@ public class MovieService {
             br.operations(op -> op
                     .index(idx -> idx
                             .index("movies")
-                            .id(movie.getId().toString())
+                            .id(movie.getId())
                             .document(movie)
                     )
             );
@@ -80,25 +80,4 @@ public class MovieService {
         }
         return movieList;
     }
-
-    /*@Autowired
-    private final MovieRepository repository;*/
-
-   /* public MovieService(MovieRepository repository) {
-        this.repository = repository;
-    }
-
-    public MovieService(MovieRepository repository, ElasticsearchClientConfig esConfig) {
-        this.repository = repository;
-        this.esConfig = esConfig;
-    }
-
-    public void save(final Movie movie) {
-        repository.save(movie);
-    }
-
-    public Movie findById(final String id) {
-        return repository.findById(id).orElse(null);
-    }*/
-
 }

@@ -59,7 +59,7 @@ public class MovieController {
 
         List<Movie> movieList = new MultiPartToMovieListParser().toMovieList(multipartFile);
 
-        return ResponseEntity.ok(movieList);
+        return ResponseEntity.ok(service.bulkIndexing(movieList));
     }
 
 }
