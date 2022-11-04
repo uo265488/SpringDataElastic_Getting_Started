@@ -1,5 +1,4 @@
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/documents/Movie.java
-/Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/repositories/MovieRepository.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/controllers/MovieController.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/SearchApplication.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/controllers/ElasticController.java
