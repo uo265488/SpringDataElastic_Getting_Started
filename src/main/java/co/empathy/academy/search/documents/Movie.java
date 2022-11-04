@@ -13,53 +13,53 @@ import java.util.UUID;
 @Document(indexName = Indices.MOVIE_INDEX)
 @Setting(settingPath = "static/es-settings.json")
 public class Movie {
+    public static final int UNDEFINED = -1;
     @Id
     @Field(type = FieldType.Keyword)
-    private final UUID id;
+    private final String id;
+
+    @Field(type = FieldType.Text)
+    private final String titleType;
+
+    @Field(type = FieldType.Text)
+    private final String primaryTitle;
+
+    @Field(type = FieldType.Text)
+    private final String originalTitle;
+
+    @Field(type = FieldType.Boolean)
+    private final Boolean isAdult;
 
     @Field(type = FieldType.Integer)
-    private final int ordering;
+    private final int startYear;
+
+    @Field(type = FieldType.Integer)
+    private final int endYear;
+
+    @Field(type = FieldType.Integer)
+    private final int runtimeMinutes;
 
     @Field(type = FieldType.Text)
-    private final String title;
+    private final String genres;
 
-    @Field(type = FieldType.Text)
-    private final String region;
-
-    @Field(type = FieldType.Text)
-    private final String language;
-
-    @Field(type = FieldType.Text)
-    private final String types;
-
-    @Field(type = FieldType.Text)
-    private final String attributes;
-
-    @Field(type = FieldType.Text)
-    private final boolean isOriginalTitle;
-
-    public Movie(UUID id, int ordering, String title, String region,
-                 String language, String types, String attributes, boolean isOriginalTitle) {
+    public Movie(String id, String titleType, String primaryTitle, String originalTitle,
+                 Boolean isAdult, int startYear, int endYear, int runtimeMinutes, String genres) {
         this.id = id;
-        this.ordering = ordering;
-        this.title = title;
-        this.region = region;
-        this.language = language;
-        this.types = types;
-        this.attributes = attributes;
-        this.isOriginalTitle = isOriginalTitle;
-
+        this.titleType = titleType;
+        this.primaryTitle = primaryTitle;
+        this.originalTitle = originalTitle;
+        this.isAdult = isAdult;
+        this.startYear = startYear;
+        this.endYear = endYear;
+        this.runtimeMinutes = runtimeMinutes;
+        this.genres = genres;
+    }
+    public Movie withId(String id) {
+        return new Movie(id, this.titleType, this.primaryTitle, this.originalTitle, this.isAdult, this.startYear,
+                this.endYear, this.runtimeMinutes, this.genres);
     }
 
-    public UUID getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-    public Movie withId(UUID uuid) {
-        return new Movie(uuid, this.ordering,
-                this.title, this.region, this.language, this.types, this.attributes, this.isOriginalTitle);
+    public String getId() {
+        return this.id;
     }
 }
