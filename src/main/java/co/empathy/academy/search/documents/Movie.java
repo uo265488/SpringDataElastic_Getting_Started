@@ -1,7 +1,7 @@
 package co.empathy.academy.search.documents;
 
 
-import co.empathy.academy.search.helper.Indices;
+import co.empathy.academy.search.helpers.Indices;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;

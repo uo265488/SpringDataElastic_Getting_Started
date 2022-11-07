@@ -1,4 +1,4 @@
-package co.empathy.academy.search.helper;
+package co.empathy.academy.search.helpers.exceptionHandling;
 
 @FunctionalInterface
 public interface ThrowingConsumer<T, E extends Exception> {
