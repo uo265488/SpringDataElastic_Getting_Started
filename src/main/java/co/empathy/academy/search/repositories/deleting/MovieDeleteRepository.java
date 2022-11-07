@@ -2,7 +2,9 @@ package co.empathy.academy.search.repositories.deleting;
 
 import co.empathy.academy.search.config.ElasticsearchClientConfig;
 import co.empathy.academy.search.documents.Movie;
-import org.elasticsearch.index.mapper.DocumentMapper;
+import co.empathy.academy.search.helper.Indices;
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
+import org.elasticsearch.client.RequestOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
@@ -25,6 +27,15 @@ public class MovieDeleteRepository implements DeleteRepository<Movie> {
 
     @Override
     public boolean deleteIndex(String indexName) {
-        return false;
+        try {
+            DeleteIndexRequest request = new DeleteIndexRequest(Indices.MOVIE_INDEX);
+
+            return esClientConfig.elasticsearchClient()
+                    .indices().delete(request, RequestOptions.DEFAULT)
+                    .isAcknowledged();
+
+        } catch (IOException exception) {
+            throw new RuntimeException(exception.getMessage());
+        }
     }
 }
