@@ -2,16 +2,16 @@ package co.empathy.academy.search.documents;
 
 
 import co.empathy.academy.search.helper.Indices;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.data.elasticsearch.annotations.Setting;
 
-import java.util.UUID;
-
 @Document(indexName = Indices.MOVIE_INDEX)
 @Setting(settingPath = "static/es-settings.json")
+@ToString
 public class Movie {
     public static final int UNDEFINED = -1;
     @Id
@@ -93,20 +93,5 @@ public class Movie {
 
     public String getGenres() {
         return genres;
-    }
-
-    @Override
-    public String toString() {
-        return "Movie{" +
-                "id='" + id + '\'' +
-                ", titleType='" + titleType + '\'' +
-                ", primaryTitle='" + primaryTitle + '\'' +
-                ", originalTitle='" + originalTitle + '\'' +
-                ", isAdult=" + isAdult +
-                ", startYear=" + startYear +
-                ", endYear=" + endYear +
-                ", runtimeMinutes=" + runtimeMinutes +
-                ", genres='" + genres + '\'' +
-                '}';
     }
 }
