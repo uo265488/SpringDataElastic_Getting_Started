@@ -51,7 +51,7 @@ public class MovieController {
     @PostMapping("/index")
     public ResponseEntity<String> indexMovie(@RequestBody Movie movie) {
 
-        return ResponseEntity.ok(service.indexMovie(movie));
+        return ResponseEntity.ok(service.indexDocument(movie));
     }
 
     @PostMapping("/bulking")
