@@ -1,28 +1,23 @@
 package co.empathy.academy.search.services;
 
-import co.elastic.clients.elasticsearch.ElasticsearchClient;
-import co.elastic.clients.elasticsearch.core.*;
-import co.elastic.clients.elasticsearch.core.bulk.BulkResponseItem;
-import co.empathy.academy.search.config.ElasticsearchClientConfig;
 import co.empathy.academy.search.documents.Movie;
-import co.empathy.academy.search.helper.Indices;
-import org.elasticsearch.xcontent.XContentType;
+import co.empathy.academy.search.repositories.deleting.DeleteRepository;
+import co.empathy.academy.search.repositories.indexing.IndexRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Service
 public class MovieService {
 
-
     private Map<UUID, Movie> movies;
 
     @Autowired
-    private ElasticsearchClientConfig esConfig;
+    private IndexRepository<Movie> indexingRepository;
+
+    @Autowired
+    private DeleteRepository<Movie> deleteRepository;
 
     public MovieService() {
         movies = new HashMap<>();
@@ -40,49 +35,23 @@ public class MovieService {
         return newMovie;
     }
 
-    public Movie deleteMovie(UUID id) {
-        return movies.remove(id);
+    public String deleteMovie(UUID id) {
+        return deleteRepository.deleteDocument(id.toString());
+    }
+
+    public String indexDocument(Movie movie) {
+        return indexingRepository.indexDocument(movie);
+    }
+    public boolean createIndex() {
+        return indexingRepository.createIndex();
     }
 
     public String indexMovie(Movie movie) {
-        IndexResponse response;
-        try {
-            response = esConfig.getEsClient()
-                    .index(i -> i.index("movie")
-                            .id("" + movie.getId())
-                            .document(movie)
-                    );
-        } catch (Exception e) {
-            return "The indexing of the movie could not be performed.";
-        }
-        return "" + response.version();
+        return indexingRepository.indexDocument(movie);
     }
 
     public List<Movie> synchronousBulkIndexing(List<Movie> movieList) {
-
-        BulkRequest.Builder br = new BulkRequest.Builder();
-
-        for (Movie movie : movieList) {
-            br.operations(op -> op
-                    .index(idx -> idx
-                            .index(Indices.MOVIE_INDEX)
-                            .id(movie.getId())
-                            .document(movie)
-                    )
-            );
-            Logger.getLogger(this.getClass().getName()).log(Level.INFO, movie.toString());
-        }
-        BulkResponse result;
-        try {
-            result = esConfig.getEsClient().bulk(br.build());
-        } catch (IOException e) {
-            throw new RuntimeException(e.getCause());
-        }
-        if (result.errors()) {
-            return new ArrayList<>();
-        }
-
-        return movieList;
+        return indexingRepository.synchronousBulkIndexing(movieList);
     }
 
 }
