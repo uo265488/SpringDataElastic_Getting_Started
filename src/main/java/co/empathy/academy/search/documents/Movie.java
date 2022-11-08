@@ -18,6 +18,9 @@ public class Movie {
     @Field(type = FieldType.Keyword)
     private final String id;
 
+    @Field(type = FieldType.Text)
+    private final String tconst;
+
     @Field(type = FieldType.Keyword)
     private final String titleType;
 
@@ -42,9 +45,16 @@ public class Movie {
     @Field(type = FieldType.Text)
     private final String genres;
 
-    public Movie(String id, String titleType, String primaryTitle, String originalTitle,
-                 Boolean isAdult, int startYear, int endYear, int runtimeMinutes, String genres) {
+    @Field(type = FieldType.Double)
+    private final double averageRating;
+
+    @Field(type = FieldType.Integer)
+    private final int numVotes;
+
+    public Movie(String id, String tconst, String titleType, String primaryTitle, String originalTitle,
+                 Boolean isAdult, int startYear, int endYear, int runtimeMinutes, String genres, double averageRating, int numVotes) {
         this.id = id;
+        this.tconst = tconst;
         this.titleType = titleType;
         this.primaryTitle = primaryTitle;
         this.originalTitle = originalTitle;
@@ -53,10 +63,29 @@ public class Movie {
         this.endYear = endYear;
         this.runtimeMinutes = runtimeMinutes;
         this.genres = genres;
+        this.averageRating = averageRating;
+        this.numVotes = numVotes;
     }
+
+    public Movie(String id, String tconst, String titleType, String primaryTitle, String originalTitle,
+                 Boolean isAdult, int startYear, int endYear, int runtimeMinutes, String genres) {
+        this.id = id;
+        this.tconst = tconst;
+        this.titleType = titleType;
+        this.primaryTitle = primaryTitle;
+        this.originalTitle = originalTitle;
+        this.isAdult = isAdult;
+        this.startYear = startYear;
+        this.endYear = endYear;
+        this.runtimeMinutes = runtimeMinutes;
+        this.genres = genres;
+        this.averageRating = 0;
+        this.numVotes = 0;
+    }
+
     public Movie withId(String id) {
-        return new Movie(id, this.titleType, this.primaryTitle, this.originalTitle, this.isAdult, this.startYear,
-                this.endYear, this.runtimeMinutes, this.genres);
+        return new Movie(id, id, this.titleType, this.primaryTitle, this.originalTitle, this.isAdult, this.startYear,
+                this.endYear, this.runtimeMinutes, this.genres, averageRating, numVotes);
     }
 
     public String getId() {
@@ -93,5 +122,13 @@ public class Movie {
 
     public String getGenres() {
         return genres;
+    }
+
+    public double getAverageRating() {
+        return averageRating;
+    }
+
+    public int getNumVotes() {
+        return numVotes;
     }
 }

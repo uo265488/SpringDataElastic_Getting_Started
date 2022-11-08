@@ -3,7 +3,6 @@ package co.empathy.academy.search.parser;
 import co.empathy.academy.search.documents.Movie;
 import co.empathy.academy.search.repositories.indexing.IndexRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
@@ -12,7 +11,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MovieParser {
 
@@ -61,6 +59,7 @@ public class MovieParser {
         Movie movie = null;
         if(!fields[0].equals("tconst")) { //NO COMMENTS ON THIS...
             movie = new Movie(
+                    fields[0],
                     fields[0],
                     fields[1],
                     fields[2],

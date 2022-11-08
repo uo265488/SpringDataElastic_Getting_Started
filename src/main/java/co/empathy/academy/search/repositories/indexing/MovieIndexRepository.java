@@ -63,8 +63,6 @@ public class MovieIndexRepository implements IndexRepository<Movie> {
                                 .document(movie)
                         )
                 );
-
-            //Logger.getLogger(this.getClass().getName()).log(Level.INFO, movie.toString());
         }
         BulkResponse result;
         try {
@@ -75,7 +73,6 @@ public class MovieIndexRepository implements IndexRepository<Movie> {
         if (result.errors()) {
             return new ArrayList<>();
         }
-
         return movieList;
     }
 

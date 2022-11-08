@@ -35,6 +35,7 @@ public class MultiPartToMovieListParser {
         if(!fields[0].equals("tconst")) { //NO COMMENTS ON THIS...
             Movie movie = new Movie(
                     fields[0],
+                    fields[0],
                     fields[1],
                     fields[2],
                     fields[3],
