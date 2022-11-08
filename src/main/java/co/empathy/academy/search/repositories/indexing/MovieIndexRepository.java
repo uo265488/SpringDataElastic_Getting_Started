@@ -6,7 +6,7 @@ import co.elastic.clients.elasticsearch.core.IndexResponse;
 import co.elastic.clients.elasticsearch.indices.CreateIndexResponse;
 import co.empathy.academy.search.config.ElasticsearchClientConfig;
 import co.empathy.academy.search.documents.Movie;
-import co.empathy.academy.search.helper.Indices;
+import co.empathy.academy.search.helpers.Indices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

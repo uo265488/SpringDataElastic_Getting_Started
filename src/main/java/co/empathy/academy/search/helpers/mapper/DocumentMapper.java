@@ -1,4 +1,4 @@
-package co.empathy.academy.search.helper;
+package co.empathy.academy.search.helpers.mapper;
 
 
 import org.springframework.data.elasticsearch.core.document.Document;

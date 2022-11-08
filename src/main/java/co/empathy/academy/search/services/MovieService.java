@@ -1,10 +1,12 @@
 package co.empathy.academy.search.services;
 
 import co.empathy.academy.search.documents.Movie;
+import co.empathy.academy.search.parser.MovieParser;
 import co.empathy.academy.search.repositories.deleting.DeleteRepository;
 import co.empathy.academy.search.repositories.indexing.IndexRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 
@@ -50,8 +52,15 @@ public class MovieService {
         return indexingRepository.indexDocument(movie);
     }
 
-    public List<Movie> synchronousBulkIndexing(List<Movie> movieList) {
-        return indexingRepository.synchronousBulkIndexing(movieList);
+    public boolean synchronousBulkIndexing(MultipartFile multipartFile) {
+        MovieParser movieParser = new MovieParser(multipartFile);
+        int numMoviesPerExecution = 50000;
+        List<Movie> movies = movieParser.parseMovies(numMoviesPerExecution);
+        while(!movies.isEmpty()) {
+            indexingRepository.synchronousBulkIndexing(movies);
+            movies = movieParser.parseMovies(numMoviesPerExecution);
+        }
+        return true;
     }
 
 }

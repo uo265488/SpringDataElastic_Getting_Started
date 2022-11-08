@@ -4,6 +4,7 @@ import co.empathy.academy.search.documents.Movie;
 import co.empathy.academy.search.parser.MultiPartToMovieListParser;
 import co.empathy.academy.search.services.MovieService;
 import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.Response;
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.annotations.MultiField;
@@ -55,11 +56,11 @@ public class MovieController {
     }
 
     @PostMapping("/bulking")
-    public ResponseEntity<List<Movie>> bulkIndexing(@RequestParam("file") MultipartFile multipartFile) {
+    public ResponseEntity<Boolean> bulkIndexing(@RequestParam("file") MultipartFile multipartFile) {
 
-        List<Movie> movieList = new MultiPartToMovieListParser().toMovieList(multipartFile);
+        //List<Movie> movieList = new MultiPartToMovieListParser().toMovieList(multipartFile);
 
-        return ResponseEntity.ok(service.synchronousBulkIndexing(movieList));
+        return ResponseEntity.ok(service.synchronousBulkIndexing(multipartFile));
     }
 
 }
