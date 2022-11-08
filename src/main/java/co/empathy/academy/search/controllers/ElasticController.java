@@ -4,6 +4,7 @@ import co.empathy.academy.search.services.ElasticService;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -49,7 +50,7 @@ public class ElasticController {
      * Performs GET request for specific index info and retrieves de info.
      * @return report about the indices in the cluster
      */
-    @GetMapping("/index/{indexName}")
+    @GetMapping("/index/report/{indexName}")
     public String getIndexReport(@PathVariable String indexName) {
         return elasticService.performGETRequest("/" + indexName);
     }

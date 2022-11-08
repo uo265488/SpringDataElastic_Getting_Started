@@ -3,16 +3,13 @@ package co.empathy.academy.search.repositories;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.elasticsearch.core.search.Hit;
 import co.elastic.clients.elasticsearch.core.search.TotalHits;
-import co.elastic.clients.elasticsearch.core.search.TotalHitsRelation;
 import co.empathy.academy.search.config.ElasticsearchClientConfig;
-import co.empathy.academy.search.config.ElasticsearchConfiguration;
 import co.empathy.academy.search.documents.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class MovieQueryRepository {
@@ -134,7 +131,7 @@ public class MovieQueryRepository {
                                     .terms(
                                             t -> t.boost(boost)
                                                     .field("movie.id")
-                                            //values???
+                                                    //values???
                                     )
                             ),
                     Movie.class

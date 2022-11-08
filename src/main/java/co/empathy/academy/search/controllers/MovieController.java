@@ -1,38 +1,66 @@
 package co.empathy.academy.search.controllers;
 
 import co.empathy.academy.search.documents.Movie;
+import co.empathy.academy.search.parser.MultiPartToMovieListParser;
 import co.empathy.academy.search.services.MovieService;
+import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.Response;
+import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.elasticsearch.annotations.MultiField;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.function.EntityResponse;
+import org.springframework.web.servlet.function.ServerResponse;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api/movie")
 public class MovieController {
-
     @Autowired
     private MovieService service;
-
     @PostMapping
-    public void save(@RequestBody final Movie movie) {
-        service.save(movie);
+    public ResponseEntity<Movie> save(@RequestBody final Movie movie) {
+        Movie newMovie = service.saveMovie(movie);
+
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(newMovie.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(newMovie);
     }
 
     @GetMapping("/{id}")
-    public Movie findById(@PathVariable final String id) {
-        return service.findById(id);
+    public ResponseEntity<Movie> findById(@PathVariable final String id) {
+        Movie movie = service.findMovieById(id);
+
+        return movie == null
+                ? ResponseEntity.notFound().build()
+                : ResponseEntity.ok(movie);
     }
 
     /**
      * Indexing a movie document in the movie index
      */
-    @GetMapping("/index")
-    public String indexMovie(@RequestBody Movie movie) {
+    @PostMapping("/index")
+    public ResponseEntity<String> indexMovie(@RequestBody Movie movie) {
 
-        return service.indexMovie(movie);
+        return ResponseEntity.ok(service.indexDocument(movie));
+    }
+
+    @PostMapping("/bulking")
+    public ResponseEntity<Boolean> bulkIndexing(@RequestParam("file") MultipartFile multipartFile) {
+
+        //List<Movie> movieList = new MultiPartToMovieListParser().toMovieList(multipartFile);
+
+        return ResponseEntity.ok(service.synchronousBulkIndexing(multipartFile));
     }
 
 }

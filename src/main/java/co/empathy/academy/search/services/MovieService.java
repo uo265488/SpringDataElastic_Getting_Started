@@ -1,45 +1,66 @@
 package co.empathy.academy.search.services;
 
-import co.elastic.clients.elasticsearch.core.IndexResponse;
-import co.empathy.academy.search.config.ElasticsearchClientConfig;
 import co.empathy.academy.search.documents.Movie;
-import co.empathy.academy.search.repositories.MovieRepository;
+import co.empathy.academy.search.parser.MovieParser;
+import co.empathy.academy.search.repositories.deleting.DeleteRepository;
+import co.empathy.academy.search.repositories.indexing.IndexRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.*;
 
 @Service
 public class MovieService {
 
-    private final MovieRepository repository;
+    private Map<UUID, Movie> movies;
 
     @Autowired
-    private ElasticsearchClientConfig esConfig;
+    private IndexRepository<Movie> indexingRepository;
 
     @Autowired
-    public MovieService(MovieRepository repository) {
-        this.repository = repository;
+    private DeleteRepository<Movie> deleteRepository;
+
+    public MovieService() {
+        movies = new HashMap<>();
     }
 
-    public void save(final Movie movie) {
-        repository.save(movie);
+    public Movie findMovieById(String id) {
+        return movies.get(id);
     }
 
-    public Movie findById(final String id) {
-        return repository.findById(id).orElse(null);
+    public Movie saveMovie(Movie movie) {
+        UUID id = UUID.randomUUID();
+        //To not use setter, avoiding altering state of movie after construction
+        Movie newMovie = movie.withId(id.toString());
+        movies.put(id, newMovie);
+        return newMovie;
+    }
+
+    public String deleteMovie(UUID id) {
+        return deleteRepository.deleteDocument(id.toString());
+    }
+
+    public String indexDocument(Movie movie) {
+        return indexingRepository.indexDocument(movie);
+    }
+    public boolean createIndex() {
+        return indexingRepository.createIndex();
     }
 
     public String indexMovie(Movie movie) {
-        IndexResponse response;
-        try {
-            response = esConfig.getEsClient()
-                    .index(i -> i.index("movie")
-                            .id(movie.getId())
-                            .document(movie)
-                    );
-        } catch (Exception e) {
-            return "The indexing of the movie could not be performed.";
+        return indexingRepository.indexDocument(movie);
+    }
+
+    public boolean synchronousBulkIndexing(MultipartFile multipartFile) {
+        MovieParser movieParser = new MovieParser(multipartFile);
+        int numMoviesPerExecution = 50000;
+        List<Movie> movies = movieParser.parseMovies(numMoviesPerExecution);
+        while(!movies.isEmpty()) {
+            indexingRepository.synchronousBulkIndexing(movies);
+            movies = movieParser.parseMovies(numMoviesPerExecution);
         }
-        return "" + response.version();
+        return true;
     }
 
 }
