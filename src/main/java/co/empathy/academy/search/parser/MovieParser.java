@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MovieParser {
 
@@ -47,25 +48,6 @@ public class MovieParser {
             throw new RuntimeException(e.getCause());
         }
         return movies;
-    }
-
-    /**
-     * Process lines in batches to prevent an OutOfMemoryError
-     * @param lines
-     */
-    private void handleLines(List<String> lines) {
-        int numThreads = 20000;
-        for(int i = 0; i < lines.size(); i = i + numThreads) {
-            List<Movie> movieList = new ArrayList<>();
-            lines.subList(i, i < lines.size() / numThreads ? i + numThreads : lines.size())
-                            .stream()
-                            .forEach(l -> {
-                                Movie movie = handleLine(l);
-                                if(movie != null) movieList.add(handleLine(l));
-                            });
-
-            indexingRepository.synchronousBulkIndexing(movieList);
-        }
     }
 
     /**

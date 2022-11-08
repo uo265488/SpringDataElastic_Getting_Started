@@ -58,8 +58,6 @@ public class MovieController {
     @PostMapping("/bulking")
     public ResponseEntity<Boolean> bulkIndexing(@RequestParam("file") MultipartFile multipartFile) {
 
-        //List<Movie> movieList = new MultiPartToMovieListParser().toMovieList(multipartFile);
-
         return ResponseEntity.ok(service.synchronousBulkIndexing(multipartFile));
     }
 

@@ -7,12 +7,15 @@ import co.elastic.clients.elasticsearch.indices.CreateIndexResponse;
 import co.empathy.academy.search.config.ElasticsearchClientConfig;
 import co.empathy.academy.search.documents.Movie;
 import co.empathy.academy.search.helpers.Indices;
+import io.netty.handler.logging.LogLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Repository
 public class MovieIndexRepository implements IndexRepository<Movie> {
@@ -53,20 +56,21 @@ public class MovieIndexRepository implements IndexRepository<Movie> {
         BulkRequest.Builder br = new BulkRequest.Builder();
 
         for (Movie movie : movieList) {
-            br.operations(op -> op
-                    .index(idx -> idx
-                            .index(Indices.MOVIE_INDEX)
-                            .id(movie.getId())
-                            .document(movie)
-                    )
-            );
+                br.operations(op -> op
+                        .index(idx -> idx
+                                .index(Indices.MOVIE_INDEX)
+                                .id(movie.getId())
+                                .document(movie)
+                        )
+                );
+
             //Logger.getLogger(this.getClass().getName()).log(Level.INFO, movie.toString());
         }
         BulkResponse result;
         try {
             result = elasticsearchClientConfig.getEsClient().bulk(br.build());
         } catch (IOException e) {
-            throw new RuntimeException(e.getCause());
+            throw new RuntimeException(e.getMessage());
         }
         if (result.errors()) {
             return new ArrayList<>();

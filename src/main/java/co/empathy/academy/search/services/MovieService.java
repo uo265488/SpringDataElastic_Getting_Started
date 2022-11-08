@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class MovieService {
@@ -55,10 +56,13 @@ public class MovieService {
     public boolean synchronousBulkIndexing(MultipartFile multipartFile) {
         MovieParser movieParser = new MovieParser(multipartFile);
         int numMoviesPerExecution = 50000;
+        int i = 0;
         List<Movie> movies = movieParser.parseMovies(numMoviesPerExecution);
         while(!movies.isEmpty()) {
-            indexingRepository.synchronousBulkIndexing(movies);
+            indexingRepository.synchronousBulkIndexing(
+                    movies.stream().filter(m -> m != null).collect(Collectors.toList()));
             movies = movieParser.parseMovies(numMoviesPerExecution);
+            System.out.println(i++);
         }
         return true;
     }
