@@ -30,11 +30,8 @@ public class MovieDeleteRepository implements DeleteRepository<Movie> {
     @Override
     public boolean deleteIndex(String indexName) {
         try {
-            DeleteIndexRequest request = new DeleteIndexRequest(Indices.MOVIE_INDEX);
-
-            return esClientConfig.elasticsearchClient()
-                    .indices().delete(request, RequestOptions.DEFAULT)
-                    .isAcknowledged();
+            return esClientConfig.getEsClient()
+                    .indices().delete(b -> b.index(Indices.MOVIE_INDEX)).acknowledged();
 
         } catch (IOException exception) {
             throw new RuntimeException(exception.getMessage());

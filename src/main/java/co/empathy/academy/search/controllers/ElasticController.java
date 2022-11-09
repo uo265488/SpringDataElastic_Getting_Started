@@ -1,14 +1,10 @@
 package co.empathy.academy.search.controllers;
 
 import co.empathy.academy.search.services.ElasticService;
-import org.elasticsearch.client.RestHighLevelClient;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;

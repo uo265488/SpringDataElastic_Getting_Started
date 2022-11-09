@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class MovieService {
@@ -32,7 +33,7 @@ public class MovieService {
     public Movie saveMovie(Movie movie) {
         UUID id = UUID.randomUUID();
         //To not use setter, avoiding altering state of movie after construction
-        Movie newMovie = movie.withId(id.toString());
+        Movie newMovie = new Movie();
         movies.put(id, newMovie);
         return newMovie;
     }
@@ -44,7 +45,7 @@ public class MovieService {
     public String indexDocument(Movie movie) {
         return indexingRepository.indexDocument(movie);
     }
-    public boolean createIndex() {
+    public String createIndex() {
         return indexingRepository.createIndex();
     }
 
@@ -52,15 +53,26 @@ public class MovieService {
         return indexingRepository.indexDocument(movie);
     }
 
-    public boolean synchronousBulkIndexing(MultipartFile multipartFile) {
+    /**
+     * Performs synchronous bulk indexing of 'title.basics.tsv' file
+     * @param multipartFile
+     * @return
+     */
+    public boolean synchronousBulkIndexingMovies(MultipartFile multipartFile) {
         MovieParser movieParser = new MovieParser(multipartFile);
         int numMoviesPerExecution = 50000;
+        int i = 0;
         List<Movie> movies = movieParser.parseMovies(numMoviesPerExecution);
         while(!movies.isEmpty()) {
-            indexingRepository.synchronousBulkIndexing(movies);
+            indexingRepository.synchronousBulkIndexing(
+                    movies.stream().filter(m -> m != null).collect(Collectors.toList()));
             movies = movieParser.parseMovies(numMoviesPerExecution);
+            System.out.println(i++);
         }
         return true;
     }
 
+    public boolean synchronousBulkIndexingRatings(MultipartFile multipartFile) {
+        return true;
+    }
 }
