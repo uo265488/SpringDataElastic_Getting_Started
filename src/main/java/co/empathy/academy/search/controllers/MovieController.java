@@ -1,24 +1,14 @@
 package co.empathy.academy.search.controllers;
 
 import co.empathy.academy.search.documents.Movie;
-import co.empathy.academy.search.parser.MultiPartToMovieListParser;
 import co.empathy.academy.search.services.MovieService;
-import jakarta.ws.rs.core.HttpHeaders;
-import jakarta.ws.rs.core.Response;
-import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.elasticsearch.annotations.MultiField;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.function.EntityResponse;
-import org.springframework.web.servlet.function.ServerResponse;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api/movie")
@@ -55,10 +45,26 @@ public class MovieController {
         return ResponseEntity.ok(service.indexDocument(movie));
     }
 
+    /**
+     * Mapping for indexing movies
+     * @param multipartFile
+     * @return response entity
+     */
     @PostMapping("/bulking")
     public ResponseEntity<Boolean> bulkIndexing(@RequestParam("file") MultipartFile multipartFile) {
 
-        return ResponseEntity.ok(service.synchronousBulkIndexing(multipartFile));
+        return ResponseEntity.ok(service.synchronousBulkIndexingMovies(multipartFile));
+    }
+
+    /**
+     * Mapping for indexing ratings
+     * @param multipartFile
+     * @return response entity
+     */
+    @PostMapping("/indexRatings")
+    public ResponseEntity<Boolean> bulkIndexingRatings(@RequestParam("file") MultipartFile multipartFile) {
+
+        return ResponseEntity.ok(service.synchronousBulkIndexingRatings(multipartFile));
     }
 
 }
