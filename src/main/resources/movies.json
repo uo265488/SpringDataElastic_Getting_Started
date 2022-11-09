@@ -1,6 +1,4 @@
 {
-  "mappings": {
-    "properties": {
       "id": { "type":  "keyword"},
       "tconst":    { "type": "text" },
       "titleType":    { "type": "text" },
@@ -13,23 +11,17 @@
       "genres": { "type": "text" },
       "averageRating": { "type": "double" },
       "numVotes": { "type": "integer" },
-
       "akas": {
-        "properties" : {
           "title": { "type" : "text"},
           "region": { "type" : "text"},
           "language": { "type" : "text"},
           "isOriginalTitle": { "type" : "boolean"}
-        }
       },
-
-      "directors": { "properties" : {
+      "directors": {
           "nconst" : { "type" : "text" }
-        }
-      },
 
+      },
       "starring": {
-        "properties": {
           "name": {
             "properties": {
               "nconst": "text"
@@ -37,10 +29,7 @@
           },
           "characters": {
             "type": "text"
-          }
         }
       }
-    }
-  }
 }
 
