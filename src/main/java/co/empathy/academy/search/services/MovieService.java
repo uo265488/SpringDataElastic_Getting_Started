@@ -33,7 +33,7 @@ public class MovieService {
     public Movie saveMovie(Movie movie) {
         UUID id = UUID.randomUUID();
         //To not use setter, avoiding altering state of movie after construction
-        Movie newMovie = movie.withId(id.toString());
+        Movie newMovie = new Movie();
         movies.put(id, newMovie);
         return newMovie;
     }
@@ -45,7 +45,7 @@ public class MovieService {
     public String indexDocument(Movie movie) {
         return indexingRepository.indexDocument(movie);
     }
-    public boolean createIndex() {
+    public String createIndex() {
         return indexingRepository.createIndex();
     }
 
@@ -53,7 +53,12 @@ public class MovieService {
         return indexingRepository.indexDocument(movie);
     }
 
-    public boolean synchronousBulkIndexing(MultipartFile multipartFile) {
+    /**
+     * Performs synchronous bulk indexing of 'title.basics.tsv' file
+     * @param multipartFile
+     * @return
+     */
+    public boolean synchronousBulkIndexingMovies(MultipartFile multipartFile) {
         MovieParser movieParser = new MovieParser(multipartFile);
         int numMoviesPerExecution = 50000;
         int i = 0;
@@ -67,4 +72,7 @@ public class MovieService {
         return true;
     }
 
+    public boolean synchronousBulkIndexingRatings(MultipartFile multipartFile) {
+        return true;
+    }
 }

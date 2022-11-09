@@ -2,6 +2,7 @@ package co.empathy.academy.search.controllers;
 
 import co.empathy.academy.search.documents.Movie;
 import co.empathy.academy.search.services.MovieService;
+import org.elasticsearch.client.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +12,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/api/movie")
+@RequestMapping("/api/movies")
 public class MovieController {
     @Autowired
     private MovieService service;
@@ -43,6 +44,11 @@ public class MovieController {
     public ResponseEntity<String> indexMovie(@RequestBody Movie movie) {
 
         return ResponseEntity.ok(service.indexDocument(movie));
+    }
+
+    @PostMapping("createIndex")
+    public ResponseEntity<String> createIndex() {
+        return ResponseEntity.ok(service.createIndex());
     }
 
     /**
