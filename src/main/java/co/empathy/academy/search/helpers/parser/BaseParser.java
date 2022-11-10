@@ -2,6 +2,7 @@ package co.empathy.academy.search.helpers.parser;
 
 import co.empathy.academy.search.documents.Movie;
 import co.empathy.academy.search.repositories.indexing.IndexRepository;
+import org.elasticsearch.client.ml.inference.preprocessing.Multi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,6 +15,7 @@ import java.util.List;
 
 public abstract class BaseParser {
 
+
     @Autowired
     private IndexRepository indexingRepository;
 
@@ -21,12 +23,15 @@ public abstract class BaseParser {
     private final BufferedReader bufferedReader;
 
     private RatingsParser ratingsParser;
+    private final AkaParser akasParser;
 
-    protected BaseParser(MultipartFile titleBasicsFile, MultipartFile ratingsFile)  {
+
+    protected BaseParser(MultipartFile titleBasicsFile, MultipartFile ratingsFile, MultipartFile akasFile)  {
         try {
             this.inputStream = titleBasicsFile.getInputStream();
             this.bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             this.ratingsParser = new RatingsParser(ratingsFile);
+            this.akasParser = new AkaParser(akasFile);
 
             this.bufferedReader.readLine(); //to avoid first line
         } catch (IOException e) {
@@ -42,12 +47,18 @@ public abstract class BaseParser {
     public List<Movie> parseMovies(int numberOfMovies) {
         List<Movie> movies = new ArrayList<>();
         Movie movie;
+        String line;
         try{
-            while(numberOfMovies > 0) {
-                movie = handleLine(bufferedReader.readLine());
-                movies.add(ratingsParser.readLine(movie));
+            line = bufferedReader.readLine();
+            while(line != null && numberOfMovies > 0) {
+                movie = handleLine(line);
+                movies.add(
+                        akasParser.getAkas(
+                                ratingsParser.readLine(movie))
+                        );
 
                 numberOfMovies--;
+                line = bufferedReader.readLine();
             }
         } catch (IOException e) {
             throw new RuntimeException(e.getCause());

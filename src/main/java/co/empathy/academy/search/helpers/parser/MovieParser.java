@@ -3,10 +3,12 @@ package co.empathy.academy.search.helpers.parser;
 import co.empathy.academy.search.documents.Movie;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+
 public class MovieParser extends BaseParser {
 
-    public MovieParser(MultipartFile titleBasicsFile, MultipartFile ratingsFile) {
-        super(titleBasicsFile, ratingsFile);
+    public MovieParser(MultipartFile titleBasicsFile, MultipartFile ratingsFile, MultipartFile akasFile) {
+        super(titleBasicsFile, ratingsFile, akasFile);
     }
 
     /**
@@ -31,7 +33,8 @@ public class MovieParser extends BaseParser {
                     !(fields[7].equals("\\N")) ? Integer.parseInt(fields[7]) : Movie.UNDEFINED,
                     fields[8],
                     0,
-                    0);
+                    0,
+                    new ArrayList<>());
 
         }
         return movie;

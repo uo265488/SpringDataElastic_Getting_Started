@@ -1,11 +1,11 @@
 package co.empathy.academy.search.documents;
 
 
-import co.empathy.academy.search.helpers.Indices;
 import co.empathy.academy.search.helpers.dto.RatingsDto;
 import lombok.*;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Value
@@ -40,5 +40,11 @@ public class Movie{
         return new Movie(this.id, this.tconst, this.titleType, this.primaryTitle, this.originalTitle,
                 this.isAdult, this.startYear, this.endYear, this.runtimeMinutes, this.genres,
                 ratings.averageRating, ratings.numVotes, this.akas);
+    }
+
+    public Movie setAkas(List<Aka> akas) {
+        return new Movie(this.id, this.tconst, this.titleType, this.primaryTitle, this.originalTitle,
+                this.isAdult, this.startYear, this.endYear, this.runtimeMinutes, this.genres,
+                this.averageRating, this.numVotes, new ArrayList<>(akas));
     }
 }

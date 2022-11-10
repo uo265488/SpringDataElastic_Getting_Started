@@ -60,13 +60,13 @@ public class MovieService {
      * @return
      */
     public boolean synchronousBulkIndexingMovies(
-            MultipartFile titleBasics, MultipartFile ratings) {
+            MultipartFile titleBasics, MultipartFile ratings, MultipartFile akas) {
 
         //indexingRepository.createIndex();
 
         int numMoviesPerExecution = 50000;
         int i = 0;
-        BaseParser movieParser = new MovieParser(titleBasics, ratings);
+        BaseParser movieParser = new MovieParser(titleBasics, ratings, akas);
         List<Movie> movies = movieParser.parseMovies(numMoviesPerExecution);
 
         while(!movies.isEmpty()) {
