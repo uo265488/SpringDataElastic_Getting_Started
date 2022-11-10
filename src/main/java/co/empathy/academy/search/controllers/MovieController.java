@@ -53,13 +53,14 @@ public class MovieController {
 
     /**
      * Mapping for indexing movies
-     * @param multipartFile
+     * @param
      * @return response entity
      */
     @PostMapping("/bulking")
-    public ResponseEntity<Boolean> bulkIndexing(@RequestParam("file") MultipartFile multipartFile) {
+    public ResponseEntity<Boolean> bulkIndexing(
+            @RequestParam("file") MultipartFile titleBasics, @RequestParam("file2") MultipartFile ratings) {
 
-        return ResponseEntity.ok(service.synchronousBulkIndexingMovies(multipartFile));
+        return ResponseEntity.ok(service.synchronousBulkIndexingMovies(titleBasics, ratings));
     }
 
     /**

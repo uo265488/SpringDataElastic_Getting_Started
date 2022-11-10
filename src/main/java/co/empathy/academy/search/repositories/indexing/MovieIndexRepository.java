@@ -4,8 +4,6 @@ import co.elastic.clients.elasticsearch.core.BulkRequest;
 import co.elastic.clients.elasticsearch.core.BulkResponse;
 import co.elastic.clients.elasticsearch.core.IndexRequest;
 import co.elastic.clients.elasticsearch.core.IndexResponse;
-import co.elastic.clients.elasticsearch.indices.CreateIndexRequest;
-import co.elastic.clients.elasticsearch.indices.CreateIndexResponse;
 import co.elastic.clients.json.JsonData;
 import co.empathy.academy.search.config.ElasticsearchClientConfig;
 import co.empathy.academy.search.documents.Movie;
@@ -13,10 +11,7 @@ import co.empathy.academy.search.helpers.Indices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,10 +31,10 @@ public class MovieIndexRepository implements IndexRepository<Movie> {
         IndexRequest<JsonData> req;
         boolean created;
         try {
-            FileReader file = new FileReader(new File(configFilePath, fileName));
+            //FileReader file = new FileReader(new File(configFilePath, fileName));
             req = IndexRequest.of(b -> b
                     .index(Indices.MOVIE_INDEX)
-                    .withJson(file)
+                    .withJson(this.getClass().getClassLoader().getResourceAsStream(fileName))
             );
 
             return elasticsearchClientConfig.getEsClient().index(req).result().jsonValue();

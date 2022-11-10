@@ -1,7 +1,8 @@
 package co.empathy.academy.search.services;
 
 import co.empathy.academy.search.documents.Movie;
-import co.empathy.academy.search.parser.MovieParser;
+import co.empathy.academy.search.helpers.parser.BaseParser;
+import co.empathy.academy.search.helpers.parser.MovieParser;
 import co.empathy.academy.search.repositories.deleting.DeleteRepository;
 import co.empathy.academy.search.repositories.indexing.IndexRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,17 +56,23 @@ public class MovieService {
 
     /**
      * Performs synchronous bulk indexing of 'title.basics.tsv' file
-     * @param multipartFile
+     * @param
      * @return
      */
-    public boolean synchronousBulkIndexingMovies(MultipartFile multipartFile) {
-        MovieParser movieParser = new MovieParser(multipartFile);
+    public boolean synchronousBulkIndexingMovies(
+            MultipartFile titleBasics, MultipartFile ratings) {
+
+        //indexingRepository.createIndex();
+
         int numMoviesPerExecution = 50000;
         int i = 0;
+        BaseParser movieParser = new MovieParser(titleBasics, ratings);
         List<Movie> movies = movieParser.parseMovies(numMoviesPerExecution);
+
         while(!movies.isEmpty()) {
             indexingRepository.synchronousBulkIndexing(
                     movies.stream().filter(m -> m != null).collect(Collectors.toList()));
+
             movies = movieParser.parseMovies(numMoviesPerExecution);
             System.out.println(i++);
         }

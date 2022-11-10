@@ -1,4 +1,4 @@
-package co.empathy.academy.search.parser;
+package co.empathy.academy.search.helpers.parser;
 
 import co.empathy.academy.search.documents.Movie;
 import co.empathy.academy.search.repositories.indexing.IndexRepository;
@@ -20,10 +20,13 @@ public abstract class BaseParser {
     InputStream inputStream;
     private final BufferedReader bufferedReader;
 
-    protected BaseParser(MultipartFile file)  {
+    private RatingsParser ratingsParser;
+
+    protected BaseParser(MultipartFile titleBasicsFile, MultipartFile ratingsFile)  {
         try {
-            this.inputStream = file.getInputStream();
+            this.inputStream = titleBasicsFile.getInputStream();
             this.bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            this.ratingsParser = new RatingsParser(ratingsFile);
 
             this.bufferedReader.readLine(); //to avoid first line
         } catch (IOException e) {
@@ -38,9 +41,12 @@ public abstract class BaseParser {
      */
     public List<Movie> parseMovies(int numberOfMovies) {
         List<Movie> movies = new ArrayList<>();
+        Movie movie;
         try{
             while(numberOfMovies > 0) {
-                movies.add(handleLine(bufferedReader.readLine()));
+                movie = handleLine(bufferedReader.readLine());
+                movies.add(ratingsParser.readLine(movie));
+
                 numberOfMovies--;
             }
         } catch (IOException e) {

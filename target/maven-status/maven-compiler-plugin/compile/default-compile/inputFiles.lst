@@ -1,4 +1,5 @@
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/controllers/MovieController.java
+/Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/helpers/parser/BaseParser.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/helpers/exceptionHandling/ThrowingConsumer.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/controllers/ElasticController.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/config/ElasticsearchClientConfig.java
@@ -7,11 +8,11 @@
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/services/MovieService.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/repositories/deleting/DeleteRepository.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/documents/Movie.java
-/Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/parser/MovieParser.java
+/Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/helpers/dto/RatingsDto.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/repositories/indexing/IndexRepository.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/SearchApplication.java
+/Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/helpers/parser/MovieParser.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/repositories/indexing/MovieIndexRepository.java
-/Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/parser/RatingsParser.java
-/Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/parser/BaseParser.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/helpers/Indices.java
+/Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/helpers/parser/RatingsParser.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/repositories/deleting/MovieDeleteRepository.java
