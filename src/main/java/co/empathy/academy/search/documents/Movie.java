@@ -31,6 +31,10 @@ public class Movie{
     private final int numVotes;
     private List<Aka> akas;
 
+    private List<Director> directors;
+
+    private List<Star> starring;
+
     public String getId() {
         return this.id;
     }
@@ -39,12 +43,24 @@ public class Movie{
     public Movie withRatings(RatingsDto ratings) {
         return new Movie(this.id, this.tconst, this.titleType, this.primaryTitle, this.originalTitle,
                 this.isAdult, this.startYear, this.endYear, this.runtimeMinutes, this.genres,
-                ratings.averageRating, ratings.numVotes, this.akas);
+                ratings.averageRating, ratings.numVotes, this.akas, this.directors, this.starring);
     }
 
     public Movie setAkas(List<Aka> akas) {
         return new Movie(this.id, this.tconst, this.titleType, this.primaryTitle, this.originalTitle,
                 this.isAdult, this.startYear, this.endYear, this.runtimeMinutes, this.genres,
-                this.averageRating, this.numVotes, new ArrayList<>(akas));
+                this.averageRating, this.numVotes, new ArrayList<>(akas), this.directors, this.starring);
+    }
+
+    public Movie setDirectors(List<Director> directors) {
+        return new Movie(this.id, this.tconst, this.titleType, this.primaryTitle, this.originalTitle,
+                this.isAdult, this.startYear, this.endYear, this.runtimeMinutes, this.genres,
+                this.averageRating, this.numVotes, this.akas, new ArrayList<>(directors), this.starring);
+    }
+
+    public Movie setStarring(List<Star> starring) {
+        return new Movie(this.id, this.tconst, this.titleType, this.primaryTitle, this.originalTitle,
+                this.isAdult, this.startYear, this.endYear, this.runtimeMinutes, this.genres,
+                this.averageRating, this.numVotes, this.akas, this.directors, starring);
     }
 }
