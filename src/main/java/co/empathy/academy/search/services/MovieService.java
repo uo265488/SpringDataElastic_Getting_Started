@@ -80,6 +80,6 @@ public class MovieService {
     }
 
     public boolean synchronousBulkIndexingRatings(MultipartFile multipartFile) {
-        return true;
+        throw new RuntimeException("Asynchoronous bulk indexing not yet implemented.");
     }
 }
