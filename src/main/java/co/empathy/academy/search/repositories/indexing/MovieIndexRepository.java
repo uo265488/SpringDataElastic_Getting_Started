@@ -29,9 +29,7 @@ public class MovieIndexRepository implements IndexRepository<Movie> {
     public String createIndex() {
 
         IndexRequest<JsonData> req;
-        boolean created;
         try {
-            //FileReader file = new FileReader(new File(configFilePath, fileName));
             req = IndexRequest.of(b -> b
                     .index(Indices.MOVIE_INDEX)
                     .withJson(this.getClass().getClassLoader().getResourceAsStream(fileName))
