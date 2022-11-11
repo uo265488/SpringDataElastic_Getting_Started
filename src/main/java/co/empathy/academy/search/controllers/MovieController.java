@@ -60,9 +60,10 @@ public class MovieController {
     public ResponseEntity<Boolean> bulkIndexing(
             @RequestParam("file") MultipartFile titleBasics,
             @RequestParam("file2") MultipartFile ratings,
-            @RequestParam("file3") MultipartFile akas) {
+            @RequestParam("file3") MultipartFile akas,
+            @RequestParam("file4") MultipartFile principals) {
 
-        return ResponseEntity.ok(service.synchronousBulkIndexingMovies(titleBasics, ratings, akas));
+        return ResponseEntity.ok(service.synchronousBulkIndexingMovies(titleBasics, ratings, akas, principals));
     }
 
     /**

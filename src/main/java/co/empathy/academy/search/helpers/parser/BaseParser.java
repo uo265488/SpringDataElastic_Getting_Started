@@ -16,6 +16,7 @@ import java.util.List;
 public abstract class BaseParser {
 
 
+
     @Autowired
     private IndexRepository indexingRepository;
 
@@ -24,14 +25,21 @@ public abstract class BaseParser {
 
     private RatingsParser ratingsParser;
     private final AkaParser akasParser;
+    private final StarringParser starringParser;
+    private final DirectorParser directorsParser;
 
 
-    protected BaseParser(MultipartFile titleBasicsFile, MultipartFile ratingsFile, MultipartFile akasFile)  {
+    protected BaseParser(MultipartFile titleBasicsFile,
+                         MultipartFile ratingsFile,
+                         MultipartFile akasFile,
+                         MultipartFile principalsFile)  {
         try {
             this.inputStream = titleBasicsFile.getInputStream();
             this.bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             this.ratingsParser = new RatingsParser(ratingsFile);
             this.akasParser = new AkaParser(akasFile);
+            this.starringParser = new StarringParser(principalsFile);
+            this.directorsParser = new DirectorParser(principalsFile);
 
             this.bufferedReader.readLine(); //to avoid first line
         } catch (IOException e) {
@@ -53,9 +61,11 @@ public abstract class BaseParser {
             while(line != null && numberOfMovies > 0) {
                 movie = handleLine(line);
                 movies.add(
-                        akasParser.getAkas(
-                                ratingsParser.readLine(movie))
-                        );
+                        directorsParser.getDirectors(
+                            starringParser.getStarring(
+                                akasParser.getAkas(
+                                        ratingsParser.readLine(movie))
+                        )));
 
                 numberOfMovies--;
                 line = bufferedReader.readLine();

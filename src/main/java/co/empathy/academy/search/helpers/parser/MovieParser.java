@@ -7,8 +7,9 @@ import java.util.ArrayList;
 
 public class MovieParser extends BaseParser {
 
-    public MovieParser(MultipartFile titleBasicsFile, MultipartFile ratingsFile, MultipartFile akasFile) {
-        super(titleBasicsFile, ratingsFile, akasFile);
+    public MovieParser(MultipartFile titleBasicsFile, MultipartFile ratingsFile, MultipartFile akasFile,
+                       MultipartFile principalsFile) {
+        super(titleBasicsFile, ratingsFile, akasFile, principalsFile);
     }
 
     /**
@@ -34,6 +35,8 @@ public class MovieParser extends BaseParser {
                     fields[8],
                     0,
                     0,
+                    new ArrayList<>(),
+                    new ArrayList<>(),
                     new ArrayList<>());
 
         }
