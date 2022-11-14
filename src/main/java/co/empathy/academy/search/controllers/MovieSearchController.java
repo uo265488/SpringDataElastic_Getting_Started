@@ -2,13 +2,11 @@ package co.empathy.academy.search.controllers;
 
 import co.elastic.clients.elasticsearch.core.search.Hit;
 import co.empathy.academy.search.documents.Movie;
+import co.empathy.academy.search.documents.ResponseModel;
 import co.empathy.academy.search.services.MovieSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,8 +17,8 @@ public class MovieSearchController {
     private MovieSearchService service;
 
     @GetMapping("/type/{type}")
-    public ResponseEntity<List<Hit<Movie>>> filterQueryByType(@PathVariable("type") String type) {
-        return ResponseEntity.ok(service.filterQuery("type", type));
+    public ResponseEntity<ResponseModel> filterQueryByType(@PathVariable("type") String type) {
+        return ResponseEntity.ok(service.filterQuery("titleType", type));
     }
 
     @GetMapping("/{id}")
@@ -30,5 +28,11 @@ public class MovieSearchController {
         return movie == null
                 ? ResponseEntity.notFound().build()
                 : ResponseEntity.ok(movie);
+    }
+
+    @GetMapping("/year")
+    public ResponseEntity<ResponseModel> rangeQueryByYear(@RequestParam int minYear,
+                                                          @RequestParam int maxYear) {
+        return ResponseEntity.ok(service.rangeQuery("startYear", minYear, maxYear));
     }
 }

@@ -5,13 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Value;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Value
-@AllArgsConstructor
-@NoArgsConstructor(force = true)
 public class ResponseModel {
 
-    List<Hit> hits;
+    List<Movie> hits;
+
+    public ResponseModel(List<Hit<Movie>> hits) {
+        this.hits = new ArrayList<>();
+        hits.forEach(h -> this.hits.add(h.source()));
+    }
 
 }
