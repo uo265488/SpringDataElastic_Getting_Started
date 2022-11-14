@@ -35,4 +35,10 @@ public class MovieSearchController {
                                                           @RequestParam int maxYear) {
         return ResponseEntity.ok(service.rangeQuery("startYear", minYear, maxYear));
     }
+
+    @GetMapping("/minutes")
+    public ResponseEntity<ResponseModel> rangeQueryByMinutes(@RequestParam int min,
+                                                          @RequestParam int max) {
+        return ResponseEntity.ok(service.rangeQuery("runtimeMinutes", min, max));
+    }
 }

@@ -1,5 +1,6 @@
 package co.empathy.academy.search.repositories.searching;
 
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.elasticsearch.core.search.Hit;
 import co.elastic.clients.elasticsearch.core.search.TotalHits;
@@ -57,6 +58,22 @@ public class MovieSearchRepository implements SearchRepository<Movie> {
                                             )
 
                                     )
+                                    .size(10000),
+                            Movie.class
+                    );
+        } catch(IOException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        return response.hits().hits();
+    }
+
+    public List<Hit<Movie>> executeQuery(Query query) {
+        SearchResponse<Movie> response;
+        try {
+            response = elasticsearchClientConfig.getEsClient()
+                    .search(s -> s
+                                    .index(Indices.MOVIE_INDEX)
+                                    .query(query)
                                     .size(10000),
                             Movie.class
                     );
