@@ -1,8 +1,7 @@
 package co.empathy.academy.search.controllers;
 
 import co.empathy.academy.search.documents.Movie;
-import co.empathy.academy.search.services.MovieService;
-import org.elasticsearch.client.Response;
+import co.empathy.academy.search.services.MovieIndexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,30 +11,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/api/movies")
-public class MovieController {
+@RequestMapping("/index")
+public class MovieIndexController {
     @Autowired
-    private MovieService service;
-    @PostMapping
-    public ResponseEntity<Movie> save(@RequestBody final Movie movie) {
-        Movie newMovie = service.saveMovie(movie);
-
-        URI uri = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(newMovie.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(newMovie);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Movie> findById(@PathVariable final String id) {
-        Movie movie = service.findMovieById(id);
-
-        return movie == null
-                ? ResponseEntity.notFound().build()
-                : ResponseEntity.ok(movie);
-    }
+    private MovieIndexService service;
 
     /**
      * Indexing a movie document in the movie index
@@ -66,15 +45,16 @@ public class MovieController {
         return ResponseEntity.ok(service.synchronousBulkIndexingMovies(titleBasics, ratings, akas, principals));
     }
 
-    /**
-     * Mapping for indexing ratings
-     * @param multipartFile
-     * @return response entity
-     */
-    @PostMapping("/indexRatings")
-    public ResponseEntity<Boolean> bulkIndexingRatings(@RequestParam("file") MultipartFile multipartFile) {
+    @PostMapping
+    public ResponseEntity<Movie> save(@RequestBody final Movie movie) {
+        Movie newMovie = null;//service.saveMovie(movie);
 
-        return ResponseEntity.ok(service.synchronousBulkIndexingRatings(multipartFile));
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(newMovie.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(newMovie);
     }
 
 }

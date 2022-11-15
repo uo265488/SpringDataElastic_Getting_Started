@@ -14,9 +14,8 @@ public interface DeleteRepository<Document> {
 
     /**
      * Delete index
-     * @param indexName
      * @return true if deleted, false uf not
      */
-    boolean deleteIndex(String indexName);
+    boolean deleteIndex();
 
 }

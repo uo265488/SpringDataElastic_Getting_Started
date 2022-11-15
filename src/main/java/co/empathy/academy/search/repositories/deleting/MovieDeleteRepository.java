@@ -28,7 +28,7 @@ public class MovieDeleteRepository implements DeleteRepository<Movie> {
     }
 
     @Override
-    public boolean deleteIndex(String indexName) {
+    public boolean deleteIndex() {
         try {
             return esClientConfig.getEsClient()
                     .indices().delete(b -> b.index(Indices.MOVIE_INDEX)).acknowledged();
