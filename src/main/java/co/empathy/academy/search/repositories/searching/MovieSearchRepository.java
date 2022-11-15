@@ -29,6 +29,7 @@ public class MovieSearchRepository implements SearchRepository<Movie> {
         )._toQuery());
     }
 
+    @Override
     public List<Hit<Movie>> rangeQuery(String fieldName, int min, int max) {
         return executeQuery( RangeQuery.of(r -> r
                 .field(fieldName)
