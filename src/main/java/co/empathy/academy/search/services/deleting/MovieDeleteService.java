@@ -1,4 +1,4 @@
-package co.empathy.academy.search.services;
+package co.empathy.academy.search.services.deleting;
 
 import co.empathy.academy.search.documents.Movie;
 import co.empathy.academy.search.repositories.deleting.DeleteRepository;

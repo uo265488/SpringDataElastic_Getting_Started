@@ -50,7 +50,7 @@ public class MovieSearchRepository implements SearchRepository<Movie> {
                     .search(s -> s
                                     .index(Indices.MOVIE_INDEX)
                                     .query(query)
-                                    .size(10000),
+                                    .size(100),
                             Movie.class
                     );
         } catch(IOException e) {

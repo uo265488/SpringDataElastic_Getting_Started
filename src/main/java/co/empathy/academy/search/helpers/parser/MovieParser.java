@@ -1,5 +1,6 @@
 package co.empathy.academy.search.helpers.parser;
 
+import co.empathy.academy.search.documents.Aka;
 import co.empathy.academy.search.documents.Movie;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,10 +30,10 @@ public class MovieParser extends BaseParser {
                     fields[2],
                     fields[3],
                     fields[4] == "0" ? true : false,
-                    !(fields[5].equals("\\N")) ? Integer.parseInt(fields[5]) : Movie.UNDEFINED,
-                    !(fields[6].equals("\\N")) ? Integer.parseInt(fields[6]) : Movie.UNDEFINED,
-                    !(fields[7].equals("\\N")) ? Integer.parseInt(fields[7]) : Movie.UNDEFINED,
-                    fields[8],
+                    !(fields[5].equals("\\N")) ? Integer.parseInt(fields[5]) : -1,
+                    !(fields[6].equals("\\N")) ? Integer.parseInt(fields[6]) : -1,
+                    !(fields[7].equals("\\N")) ? Integer.parseInt(fields[7]) : -1,
+                    fields[8].split(","),
                     0,
                     0,
                     new ArrayList<>(),

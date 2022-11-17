@@ -1,9 +1,9 @@
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/repositories/searching/SearchRepository.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/controllers/ElasticController.java
-/Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/services/MovieIndexService.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/config/ElasticsearchClientConfig.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/repositories/searching/MovieSearchRepository.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/controllers/MovieSearchController.java
+/Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/services/deleting/MovieDeleteService.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/repositories/deleting/DeleteRepository.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/documents/Movie.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/repositories/indexing/IndexRepository.java
@@ -12,6 +12,7 @@
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/helpers/Indices.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/helpers/parser/BaseParser.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/helpers/parser/StarringParser.java
+/Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/services/searching/MovieSearchService.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/helpers/exceptionHandling/ThrowingConsumer.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/documents/ResponseModel.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/documents/Aka.java
@@ -24,8 +25,7 @@
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/documents/Name.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/helpers/dto/RatingsDto.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/helpers/parser/MovieParser.java
-/Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/services/MovieSearchService.java
+/Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/services/indexing/MovieIndexService.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/helpers/parser/DirectorParser.java
-/Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/services/MovieDeleteService.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/helpers/parser/RatingsParser.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/repositories/deleting/MovieDeleteRepository.java

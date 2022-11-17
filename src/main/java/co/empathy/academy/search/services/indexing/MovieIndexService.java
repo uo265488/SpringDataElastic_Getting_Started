@@ -1,12 +1,10 @@
-package co.empathy.academy.search.services;
+package co.empathy.academy.search.services.indexing;
 
-import co.elastic.clients.elasticsearch.core.search.Hit;
 import co.empathy.academy.search.documents.Movie;
 import co.empathy.academy.search.helpers.parser.BaseParser;
 import co.empathy.academy.search.helpers.parser.MovieParser;
 import co.empathy.academy.search.repositories.deleting.DeleteRepository;
 import co.empathy.academy.search.repositories.indexing.IndexRepository;
-import co.empathy.academy.search.repositories.searching.SearchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +19,9 @@ public class MovieIndexService {
 
     @Autowired
     private IndexRepository<Movie> indexingRepository;
+
+    @Autowired
+    private DeleteRepository<Movie> deleteRepository;
 
     public MovieIndexService() {
         movies = new HashMap<>();
@@ -41,15 +42,17 @@ public class MovieIndexService {
     public boolean synchronousBulkIndexingMovies(
             MultipartFile titleBasics, MultipartFile ratings, MultipartFile akas, MultipartFile principals) {
 
-        //indexingRepository.createIndex();
-        int numMoviesPerExecution = 50000;
+        deleteRepository.deleteIndex();
+        indexingRepository.createIndex();
+
+        int numMoviesPerExecution = 5000;
         BaseParser movieParser = new MovieParser(titleBasics, ratings, akas, principals);
         List<Movie> movies = movieParser.parseMovies(numMoviesPerExecution);
         while(!movies.isEmpty()) {
             indexingRepository.synchronousBulkIndexing(
                     movies.stream().filter(m -> m != null).collect(Collectors.toList()));
-
             movies = movieParser.parseMovies(numMoviesPerExecution);
+            break;
         }
         return true;
     }
@@ -63,8 +66,4 @@ public class MovieIndexService {
             MultipartFile titleBasics, MultipartFile ratings, MultipartFile akas, MultipartFile principals) {
         throw new RuntimeException("Asynchoronous bulk indexing not yet implemented.");
     }
-
-
-
-
 }

@@ -1,79 +1,68 @@
 {
-      "movies": {
-            "mappings": {
+      "properties": {
+            "id": {
+                  "type": "keyword"
+            },
+            "tconst": {
+                  "type": "keyword"
+            },
+            "titleType": {
+                  "type": "keyword"
+            },
+            "primaryTitle": {
+                  "type": "text"
+            },
+            "originalTitle": {
+                  "type": "text"
+            },
+            "isAdult": {
+                  "type": "boolean"
+            },
+            "startYear": {
+                  "type": "integer"
+            },
+            "endYear": {
+                  "type": "integer"
+            },
+            "runtimeMinutes": {
+                  "type": "integer"
+            },
+            "genres": {
+                  "type": "keyword"
+            },
+            "averageRating": {
+                  "type": "double"
+            },
+            "numVotes": {
+                  "type": "integer"
+            },
+            "akas": {
+                  "type": "nested",
                   "properties": {
-                        "averageRating": {
-                              "type": "float"
-                        },
-                        "endYear": {
-                              "type": "long"
-                        },
-                        "genres": {
-                              "type": "text",
-                              "fields": {
-                                    "keyword": {
-                                          "type": "keyword",
-                                          "ignore_above": 256
-                                    }
+                        "tconst": { "type" :  "keyword" },
+                        "title": { "type": "text" },
+                        "region": { "type": "keyword"},
+                        "language": { "type": "keyword"}
+                  }
+            },
+            "directors": {
+                  "type": "nested",
+                  "properties": {
+                        "nconst": { "type": "keyword" },
+                        "tconst": { "type": "keyword" }
+                  }
+            },
+            "starring": {
+                  "type": "nested",
+                  "properties": {
+                        "tconst": { "type": "keyword" },
+                        "name" : {
+                              "type": "nested",
+                              "properties" : {
+                                    "nconst": { "type": "keyword" }
                               }
                         },
-                        "id": {
-                              "type": "text",
-                              "fields": {
-                                    "keyword": {
-                                          "type": "keyword",
-                                          "ignore_above": 256
-                                    }
-                              }
-                        },
-                        "isAdult": {
-                              "type": "boolean"
-                        },
-                        "numVotes": {
-                              "type": "long"
-                        },
-                        "originalTitle": {
-                              "type": "text",
-                              "fields": {
-                                    "keyword": {
-                                          "type": "keyword",
-                                          "ignore_above": 256
-                                    }
-                              }
-                        },
-                        "primaryTitle": {
-                              "type": "text",
-                              "fields": {
-                                    "keyword": {
-                                          "type": "keyword",
-                                          "ignore_above": 256
-                                    }
-                              }
-                        },
-                        "runtimeMinutes": {
-                              "type": "long"
-                        },
-                        "startYear": {
-                              "type": "long"
-                        },
-                        "tconst": {
-                              "type": "text",
-                              "fields": {
-                                    "keyword": {
-                                          "type": "keyword",
-                                          "ignore_above": 256
-                                    }
-                              }
-                        },
-                        "titleType": {
-                              "type": "text",
-                              "fields": {
-                                    "keyword": {
-                                          "type": "keyword",
-                                          "ignore_above": 256
-                                    }
-                              }
-                        }
+                        "characters": { "type": "text" }
                   }
             }
       }
