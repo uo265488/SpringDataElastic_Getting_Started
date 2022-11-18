@@ -26,14 +26,15 @@ public class Movie {
     private final int endYear;
     @Nullable
     private final int runtimeMinutes;
-    private final String[] genres;
+
+    private final List<String> genres;
     private final double averageRating;
     private final int numVotes;
-    private List<Aka> akas;
+    List<Aka> akas;
 
-    private List<Director> directors;
+    List<Director> directors;
 
-    private List<Star> starring;
+    List<Star> starring;
 
     public String getId() {
         return this.id;
