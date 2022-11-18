@@ -30,6 +30,12 @@ public class Facet {
                     b -> values.add(new FacetItem(b, name.substring(5)))
             );
         }
+        if(aggregate.isRange()) {
+            type1 = "range";
+            aggregate.range().buckets().array().forEach(
+                    b -> values.add(new FacetItem(b, name.substring(5)))
+            );
+        }
         this.type = type1;
         System.out.println(aggregate._get());
     }

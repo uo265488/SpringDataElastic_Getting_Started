@@ -2,6 +2,7 @@ package co.empathy.academy.search.documents;
 
 import co.elastic.clients.elasticsearch._types.aggregations.HistogramAggregate;
 import co.elastic.clients.elasticsearch._types.aggregations.HistogramBucket;
+import co.elastic.clients.elasticsearch._types.aggregations.RangeBucket;
 import co.elastic.clients.elasticsearch._types.aggregations.StringTermsBucket;
 import lombok.AllArgsConstructor;
 import lombok.Value;
@@ -32,6 +33,14 @@ public class FacetItem {
         value = b.key().stringValue();
         id = b.key().stringValue();
         filter = name + ":" + b.key().stringValue();
+        children = null;
+    }
+
+    public FacetItem(RangeBucket b, String name) {
+        count = b.docCount();
+        value = (b.from() == null ? "*" : b.from()) + "-" + (b.to() == null ? "*" : b.to());
+        id = value;
+        filter = name + ":" + value;
         children = null;
     }
 }

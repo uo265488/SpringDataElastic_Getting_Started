@@ -1,6 +1,8 @@
 package co.empathy.academy.search.repositories.searching;
 
 import co.elastic.clients.elasticsearch._types.FieldValue;
+import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
+import co.elastic.clients.elasticsearch._types.aggregations.AggregationRange;
 import co.elastic.clients.elasticsearch._types.query_dsl.*;
 import co.elastic.clients.elasticsearch.core.SearchRequest;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -67,9 +70,9 @@ public class MovieSearchRepository implements SearchRepository {
                 .query(query)
                 .size(size)
                         .aggregations("facetMinutes", a -> a
-                                .histogram(h -> h
+                                .range(h -> h
                                         .field(FieldAttr.Movie.MINUTES_FIELD)
-                                        .interval(50.0)
+                                        .ranges(getAggregationRange())
                                 )
                         )
                 .aggregations("facetGenre", a -> a
@@ -78,5 +81,20 @@ public class MovieSearchRepository implements SearchRepository {
                         )
                 )
         );
+    }
+
+    private List<AggregationRange> getAggregationRange() {
+        List<AggregationRange> list = new ArrayList<>();
+        list.add(AggregationRange.of(a ->
+                a.to("100")
+                ));
+        list.add(AggregationRange.of(a ->
+                a.from("100").to("200")
+        ));
+        list.add(AggregationRange.of(a ->
+                a.from("200")
+        ));
+
+        return list;
     }
 }
