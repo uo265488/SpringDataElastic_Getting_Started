@@ -1,12 +1,12 @@
 package co.empathy.academy.search.repositories.searching;
 
-import co.elastic.clients.elasticsearch._types.query_dsl.MatchQuery;
-import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import co.elastic.clients.elasticsearch._types.query_dsl.RangeQuery;
+import co.elastic.clients.elasticsearch._types.FieldValue;
+import co.elastic.clients.elasticsearch._types.query_dsl.*;
+import co.elastic.clients.elasticsearch.core.SearchRequest;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.elasticsearch.core.search.Hit;
-import co.elastic.clients.json.JsonData;
 import co.empathy.academy.search.config.ElasticsearchClientConfig;
+import co.empathy.academy.search.documents.FieldAttr;
 import co.empathy.academy.search.documents.Movie;
 import co.empathy.academy.search.helpers.Indices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,21 +21,26 @@ public class MovieSearchRepository implements SearchRepository<Movie> {
     @Autowired
     private ElasticsearchClientConfig elasticsearchClientConfig;
 
-    @Override
-    public List<Hit<Movie>> filterQuery(String fieldName, String value) {
-        return executeQuery(MatchQuery.of(m -> m
-                .field(fieldName)
-                .query(value)
-        )._toQuery());
+    /**
+     * Adds a histogram aggregation for runtimeMinutes
+     * @param builder
+     */
+    private void addHistogramAggregation(SearchRequest.Builder builder) {
+        builder.aggregations("runtimeMinutes-histogram", a -> a
+                .histogram(h -> h
+                        .field("runtimeMinutes")
+                        .interval(20.0)
+                )
+        );
     }
 
-    @Override
-    public List<Hit<Movie>> rangeQuery(String fieldName, int min, int max) {
-        return executeQuery( RangeQuery.of(r -> r
-                .field(fieldName)
-                .lte(JsonData.of(max))
-                .gte(JsonData.of(min))
-        )._toQuery());
+    private Query getTermsQuery(List<FieldValue> filters, String field) {
+        return Query.of(q ->
+                q.terms(TermsQuery.of(tsq ->
+                        tsq.field(field)
+                                .terms(TermsQueryField.of(tf -> tf.value(
+                                        filters
+                                ))))));
     }
 
     /**
@@ -43,19 +48,30 @@ public class MovieSearchRepository implements SearchRepository<Movie> {
      * @param query
      * @return
      */
-    public List<Hit<Movie>> executeQuery(Query query) {
-        SearchResponse<Movie> response;
+    @Override
+    public List<Hit<Movie>> executeQuery(Query query, int size) {
+        SearchResponse response;
         try {
             response = elasticsearchClientConfig.getEsClient()
-                    .search(s -> s
-                                    .index(Indices.MOVIE_INDEX)
-                                    .query(query)
-                                    .size(100),
-                            Movie.class
-                    );
+                    .search(getSearchRequest(query, size), Object.class);
         } catch(IOException e) {
             throw new RuntimeException(e.getMessage());
         }
+        System.out.println(response.hits());
         return response.hits().hits();
+    }
+
+    private SearchRequest getSearchRequest(Query query, int size) {
+        return SearchRequest.of(s -> s
+                .index(Indices.MOVIE_INDEX)
+                .query(query)
+                .size(size)
+                .aggregations("time-histogram", a -> a
+                        .histogram(h -> h
+                                .field(FieldAttr.Movie.MINUTES_FIELD)
+                                .interval(20.0)
+                        )
+                )
+        );
     }
 }
