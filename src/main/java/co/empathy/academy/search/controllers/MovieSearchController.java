@@ -39,4 +39,5 @@ public class MovieSearchController {
     public ResponseEntity<ResponseModel> rangeQueryByGenres(@RequestParam String[] genres) {
         return ResponseEntity.ok(service.filterQuery("genres", genres));
     }
+
 }
