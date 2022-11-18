@@ -39,8 +39,9 @@ public class MovieSearchService {
      * @return ResponseModel
      */
     public ResponseModel filterQuery(String fieldName, String[] values) {
-        ResponseModel responseModel = new ResponseModel(new ArrayList<>());
-        for(int i = 0; i < values.length; i++) {
+        ResponseModel responseModel = new ResponseModel(repository.executeQuery(
+                factory.getFilterQuery(fieldName, values[0]), 100));
+        for(int i = 1; i < values.length; i++) {
             responseModel.addHits(repository.executeQuery(
                             factory.getFilterQuery(fieldName, values[i]), 100));
         }

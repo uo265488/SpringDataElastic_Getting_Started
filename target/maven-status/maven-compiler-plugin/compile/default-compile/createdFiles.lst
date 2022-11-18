@@ -1,8 +1,10 @@
+co/empathy/academy/search/documents/Facet.class
 co/empathy/academy/search/repositories/searching/MovieSearchRepository.class
 co/empathy/academy/search/config/ElasticsearchClientConfig.class
 co/empathy/academy/search/repositories/searching/QueryFactoryImpl.class
 co/empathy/academy/search/repositories/MovieQueryRepository.class
 co/empathy/academy/search/services/indexing/MovieIndexService.class
+co/empathy/academy/search/documents/FacetItem.class
 co/empathy/academy/search/controllers/MovieSearchController.class
 co/empathy/academy/search/repositories/indexing/MovieIndexRepository.class
 co/empathy/academy/search/helpers/parser/AkaParser.class

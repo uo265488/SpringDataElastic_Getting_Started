@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Repository
-public class MovieSearchRepository implements SearchRepository<Movie> {
+public class MovieSearchRepository implements SearchRepository {
 
     @Autowired
     private ElasticsearchClientConfig elasticsearchClientConfig;
@@ -49,7 +49,7 @@ public class MovieSearchRepository implements SearchRepository<Movie> {
      * @return
      */
     @Override
-    public List<Hit<Movie>> executeQuery(Query query, int size) {
+    public SearchResponse executeQuery(Query query, int size) {
         SearchResponse response;
         try {
             response = elasticsearchClientConfig.getEsClient()
@@ -57,8 +57,8 @@ public class MovieSearchRepository implements SearchRepository<Movie> {
         } catch(IOException e) {
             throw new RuntimeException(e.getMessage());
         }
-        System.out.println(response.hits());
-        return response.hits().hits();
+        //System.out.println(response.aggregations());
+        return response;
     }
 
     private SearchRequest getSearchRequest(Query query, int size) {
@@ -66,10 +66,15 @@ public class MovieSearchRepository implements SearchRepository<Movie> {
                 .index(Indices.MOVIE_INDEX)
                 .query(query)
                 .size(size)
-                .aggregations("time-histogram", a -> a
-                        .histogram(h -> h
-                                .field(FieldAttr.Movie.MINUTES_FIELD)
-                                .interval(20.0)
+                        .aggregations("facetMinutes", a -> a
+                                .histogram(h -> h
+                                        .field(FieldAttr.Movie.MINUTES_FIELD)
+                                        .interval(50.0)
+                                )
+                        )
+                .aggregations("facetGenre", a -> a
+                        .terms(h -> h
+                                .field(FieldAttr.Movie.GENRES_FIELD)
                         )
                 )
         );
