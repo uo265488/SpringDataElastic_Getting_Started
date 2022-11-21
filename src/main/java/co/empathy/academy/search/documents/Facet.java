@@ -37,6 +37,5 @@ public class Facet {
             );
         }
         this.type = type1;
-        System.out.println(aggregate._get());
     }
 }

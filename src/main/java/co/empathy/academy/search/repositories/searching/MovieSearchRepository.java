@@ -60,7 +60,6 @@ public class MovieSearchRepository implements SearchRepository {
         } catch(IOException e) {
             throw new RuntimeException(e.getMessage());
         }
-        //System.out.println(response.aggregations());
         return response;
     }
 
@@ -69,10 +68,10 @@ public class MovieSearchRepository implements SearchRepository {
                 .index(Indices.MOVIE_INDEX)
                 .query(query)
                 .size(size)
-                        .aggregations("facetMinutes", a -> a
+                .aggregations("facetMinutes", a -> a
                                 .range(h -> h
                                         .field(FieldAttr.Movie.MINUTES_FIELD)
-                                        .ranges(getAggregationRange())
+                                        .ranges(getAggregationRange(100, 200, 100))
                                 )
                         )
                 .aggregations("facetGenre", a -> a
@@ -80,19 +79,37 @@ public class MovieSearchRepository implements SearchRepository {
                                 .field(FieldAttr.Movie.GENRES_FIELD)
                         )
                 )
+                .aggregations("facetTitleType", a -> a
+                        .terms(h -> h
+                                .field(FieldAttr.Movie.TITLE_TYPE_FIELD)
+                        )
+                ).aggregations("facetStartYear", a -> a
+                        .range(h -> h
+                                .field(FieldAttr.Movie.MINUTES_FIELD)
+                                .ranges(getAggregationRange(1000, 2000, 200))
+                        )
+                ).aggregations("facetAverageRating", a -> a
+                        .range(h -> h
+                                .field(FieldAttr.Movie.RATING_FIELD)
+                                .ranges(getAggregationRange(0, 10, 1))
+                        )
+                )
         );
     }
 
-    private List<AggregationRange> getAggregationRange() {
+    private List<AggregationRange> getAggregationRange(int min, int max, int interval) {
         List<AggregationRange> list = new ArrayList<>();
         list.add(AggregationRange.of(a ->
-                a.to("100")
+                a.to(String.valueOf(min))
                 ));
+        for(int i = min; i < max; i = i + interval) {
+            int finalI = i;
+            list.add(AggregationRange.of(a ->
+                    a.from(String.valueOf(finalI)).to(String.valueOf(finalI + interval))
+            ));
+        }
         list.add(AggregationRange.of(a ->
-                a.from("100").to("200")
-        ));
-        list.add(AggregationRange.of(a ->
-                a.from("200")
+                a.from(String.valueOf(max))
         ));
 
         return list;
