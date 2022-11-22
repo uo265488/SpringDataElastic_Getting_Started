@@ -10,5 +10,5 @@ public interface SearchRepository {
      * @param query
      * @return List<Hit<Document>>
      */
-    SearchResponse executeQuery(Query query, int size);
+    SearchResponse executeQuery(Query query, int size, String ordering, String orderBy);
 }
