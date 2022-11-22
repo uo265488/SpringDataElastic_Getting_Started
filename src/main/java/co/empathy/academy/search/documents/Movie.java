@@ -13,27 +13,28 @@ import java.util.List;
 @NoArgsConstructor(force = true)
 @ToString
 @Getter
-public class Movie{
-    public static final int UNDEFINED = -1;
-
+public class Movie {
     private String id;
     private String tconst;
     private String titleType;
     private String primaryTitle;
     private String originalTitle;
     private final Boolean isAdult;
+    @Nullable
     private final int startYear;
     @Nullable
     private final int endYear;
+    @Nullable
     private final int runtimeMinutes;
-    private final String genres; //needs fix
+
+    private final List<String> genres;
     private final double averageRating;
     private final int numVotes;
-    private List<Aka> akas;
+    List<Aka> akas;
 
-    private List<Director> directors;
+    List<Director> directors;
 
-    private List<Star> starring;
+    List<Star> starring;
 
     public String getId() {
         return this.id;
@@ -46,10 +47,10 @@ public class Movie{
                 ratings.averageRating, ratings.numVotes, this.akas, this.directors, this.starring);
     }
 
-    public Movie setAkas(List<Aka> akas) {
+    public Movie setAkas(List akas) {
         return new Movie(this.id, this.tconst, this.titleType, this.primaryTitle, this.originalTitle,
                 this.isAdult, this.startYear, this.endYear, this.runtimeMinutes, this.genres,
-                this.averageRating, this.numVotes, new ArrayList<>(akas), this.directors, this.starring);
+                this.averageRating, this.numVotes, akas, this.directors, this.starring);
     }
 
     public Movie setDirectors(List<Director> directors) {
@@ -61,6 +62,6 @@ public class Movie{
     public Movie setStarring(List<Star> starring) {
         return new Movie(this.id, this.tconst, this.titleType, this.primaryTitle, this.originalTitle,
                 this.isAdult, this.startYear, this.endYear, this.runtimeMinutes, this.genres,
-                this.averageRating, this.numVotes, this.akas, this.directors, starring);
+                this.averageRating, this.numVotes, this.akas, this.directors, new ArrayList<>(starring));
     }
 }

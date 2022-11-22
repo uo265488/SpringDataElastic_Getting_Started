@@ -1,7 +1,7 @@
 package co.empathy.academy.search.controllers;
 
 import co.empathy.academy.search.documents.Movie;
-import co.empathy.academy.search.services.MovieIndexService;
+import co.empathy.academy.search.services.indexing.MovieIndexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

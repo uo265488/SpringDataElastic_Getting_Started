@@ -1,24 +1,14 @@
 package co.empathy.academy.search.repositories.searching;
 
-import co.elastic.clients.elasticsearch.core.search.Hit;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.elasticsearch.core.SearchResponse;
 
-import java.util.List;
-
-public interface SearchRepository<Document> {
-
-    /**
-     * Performs a filterQuery for the field "fieldName" and the value "value"
-     * @param fieldName
-     * @return list of hits
-     */
-    List<Hit<Document>> filterQuery(String fieldName, String value);
+public interface SearchRepository {
 
     /**
-     * Performs a rangeQuery for the field "fieldName" in the range
-     * @param fieldName
-     * @return list of hits
+     * Query executor
+     * @param query
+     * @return List<Hit<Document>>
      */
-    List<Hit<Document>> rangeQuery(String fieldName, int min, int max);
-
-
+    SearchResponse executeQuery(Query query, int size);
 }

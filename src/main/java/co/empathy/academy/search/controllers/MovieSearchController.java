@@ -1,15 +1,10 @@
 package co.empathy.academy.search.controllers;
 
-import co.elastic.clients.elasticsearch.core.search.Hit;
-import co.empathy.academy.search.documents.Movie;
 import co.empathy.academy.search.documents.ResponseModel;
-import co.empathy.academy.search.services.MovieSearchService;
+import co.empathy.academy.search.services.searching.MovieSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/search")
@@ -44,4 +39,5 @@ public class MovieSearchController {
     public ResponseEntity<ResponseModel> rangeQueryByGenres(@RequestParam String[] genres) {
         return ResponseEntity.ok(service.filterQuery("genres", genres));
     }
+
 }

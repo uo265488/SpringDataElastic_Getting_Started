@@ -9,8 +9,8 @@ import lombok.*;
 @Getter
 public class Aka {
 
-    private String tconst;
-    private String title;
-    private String region;
-    private String language;
+    String tconst;
+    String title;
+    String region;
+    String language;
 }

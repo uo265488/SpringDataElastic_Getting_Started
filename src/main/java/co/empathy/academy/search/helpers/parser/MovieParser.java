@@ -1,9 +1,11 @@
 package co.empathy.academy.search.helpers.parser;
 
+import co.empathy.academy.search.documents.Aka;
 import co.empathy.academy.search.documents.Movie;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MovieParser extends BaseParser {
 
@@ -29,10 +31,10 @@ public class MovieParser extends BaseParser {
                     fields[2],
                     fields[3],
                     fields[4] == "0" ? true : false,
-                    !(fields[5].equals("\\N")) ? Integer.parseInt(fields[5]) : Movie.UNDEFINED,
-                    !(fields[6].equals("\\N")) ? Integer.parseInt(fields[6]) : Movie.UNDEFINED,
-                    !(fields[7].equals("\\N")) ? Integer.parseInt(fields[7]) : Movie.UNDEFINED,
-                    fields[8],
+                    !(fields[5].equals("\\N")) ? Integer.parseInt(fields[5]) : -1,
+                    !(fields[6].equals("\\N")) ? Integer.parseInt(fields[6]) : -1,
+                    !(fields[7].equals("\\N")) ? Integer.parseInt(fields[7]) : -1,
+                    getGenres(fields[8]),
                     0,
                     0,
                     new ArrayList<>(),
@@ -41,6 +43,17 @@ public class MovieParser extends BaseParser {
 
         }
         return movie;
+    }
+
+    private List<String> getGenres(String field) {
+        List<String> genres = new ArrayList<>();
+        if(!field.equals("\\N")) {
+            String[] fields = field.split(",");
+            for(int i = 0; i < fields.length; i++) {
+                genres.add(fields[i]);
+            }
+        }
+        return genres;
     }
 
 }

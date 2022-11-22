@@ -27,18 +27,26 @@ public class MovieIndexRepository implements IndexRepository<Movie> {
 
     @Override
     public String createIndex() {
-
-        IndexRequest<JsonData> req;
         try {
-            req = IndexRequest.of(b -> b
-                    .index(Indices.MOVIE_INDEX)
-                    .withJson(this.getClass().getClassLoader().getResourceAsStream(fileName))
-            );
-
-            return elasticsearchClientConfig.getEsClient().index(req).result().jsonValue();
+            elasticsearchClientConfig.getEsClient().indices().create(i -> i.index(Indices.MOVIE_INDEX));
+            return updateMapping();
         } catch(IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Updates the mapping of the MOVIE index
+     * @return
+     * @throws IOException
+     */
+    private String updateMapping() throws IOException {
+        return elasticsearchClientConfig.getEsClient()
+                .indices()
+                .putMapping(
+                        m -> m.index(Indices.MOVIE_INDEX)
+                                .withJson(this.getClass().getClassLoader().getResourceAsStream(fileName)))
+                .toString();
     }
 
     @Override

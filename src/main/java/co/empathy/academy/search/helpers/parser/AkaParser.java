@@ -52,7 +52,7 @@ public class AkaParser {
      */
     protected Movie getAkas(Movie movie) {
         Movie result = movie;
-        if( movie != null && actualAkas.get(0).getTconst().equals(movie.getId())) {
+        if( movie != null || actualAkas.get(0).getTconst().equals(movie.getId())) {
             result = movie.setAkas(actualAkas);
             this.actualAkas = new ArrayList<>();
             actualAkas.add(nextAka);
