@@ -18,11 +18,13 @@ public class QueryFactoryImpl implements QueryFactory {
     }
 
     @Override
-    public Query getRangeQuery(String fieldName, int min, int max) {
+    public Query getRangeQuery(String fieldName, double min, double max) {
         return RangeQuery.of(r -> r
                 .field(fieldName)
                 .lte(JsonData.of(max))
                 .gte(JsonData.of(min))
         )._toQuery();
     }
+
+
 }

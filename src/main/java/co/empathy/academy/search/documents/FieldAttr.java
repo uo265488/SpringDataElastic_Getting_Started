@@ -1,5 +1,7 @@
 package co.empathy.academy.search.documents;
 
+import java.util.Optional;
+
 public final class FieldAttr {
 
     private FieldAttr() {
@@ -21,5 +23,18 @@ public final class FieldAttr {
         public static final String RATING_FIELD = "averageRating";
         public static final String VOTES_FIELD = "numVotes";
 
+        public static boolean isField(String orderBy) {
+            return orderBy.equals(PRIMARY_TITLE_FIELD) ||
+                    orderBy.equals(ORIGINAL_TITLE_FIELD) ||
+                    orderBy.equals(IS_ADULT_FIELD) ||
+                    orderBy.equals(TITLE_TYPE_FIELD) ||
+                    orderBy.equals(GENRES_FIELD) ||
+                    orderBy.equals(START_YEAR_FIELD) ||
+                    orderBy.equals(END_YEAR_FIELD) ||
+                    orderBy.equals(MINUTES_FIELD) ||
+                    orderBy.equals(RATING_FIELD) ||
+                    orderBy.equals(VOTES_FIELD);
+
+        }
     }
 }

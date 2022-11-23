@@ -14,7 +14,6 @@ import java.util.Map;
 
 @Service
 public class MovieSearchService {
-
     @Autowired
     private MovieSearchRepository repository;
 
@@ -27,9 +26,11 @@ public class MovieSearchService {
      * @param value value of the field
      * @return ResponseModel
      */
-    public ResponseModel filterQuery(String fieldName, String value) {
+    public ResponseModel filterQuery(
+            String fieldName, String value, int size, String sortOrder, String orderBy) {
+
         return new ResponseModel(repository.executeQuery(
-                factory.getFilterQuery(fieldName, value), 100));
+                factory.getFilterQuery(fieldName, value), size, sortOrder, orderBy));
     }
 
     /**
@@ -38,12 +39,13 @@ public class MovieSearchService {
      * @param values values of the field
      * @return ResponseModel
      */
-    public ResponseModel filterQuery(String fieldName, String[] values) {
+    public ResponseModel filterQuery(
+            String fieldName, String[] values, int size, String sortOrder, String orderBy) {
         ResponseModel responseModel = new ResponseModel(repository.executeQuery(
-                factory.getFilterQuery(fieldName, values[0]), 100));
+                factory.getFilterQuery(fieldName, values[0]), size, sortOrder, orderBy));
         for(int i = 1; i < values.length; i++) {
             responseModel.addHits(repository.executeQuery(
-                            factory.getFilterQuery(fieldName, values[i]), 100));
+                            factory.getFilterQuery(fieldName, values[i]), size, sortOrder, orderBy));
         }
         return responseModel;
     }
@@ -55,9 +57,11 @@ public class MovieSearchService {
      * @param max max value
      * @return
      */
-    public ResponseModel rangeQuery(String fieldName, int min, int max) {
+    public ResponseModel rangeQuery(String fieldName, double min, double max, int size, String ordering,
+                                    String orderBy) {
+
         return new ResponseModel(repository.executeQuery(
-                factory.getRangeQuery(fieldName, min, max), 100));
+                factory.getRangeQuery(fieldName, min, max), size, ordering, orderBy));
     }
 
 }

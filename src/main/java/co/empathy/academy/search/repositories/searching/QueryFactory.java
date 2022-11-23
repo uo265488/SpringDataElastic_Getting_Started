@@ -17,7 +17,7 @@ public interface QueryFactory {
      * @param fieldName
      * @return list of hits
      */
-    Query getRangeQuery(String fieldName, int min, int max);
+    Query getRangeQuery(String fieldName, double min, double max);
 
 
 }
