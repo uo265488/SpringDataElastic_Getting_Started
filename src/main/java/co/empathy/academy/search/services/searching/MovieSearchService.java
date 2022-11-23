@@ -45,7 +45,7 @@ public class MovieSearchService {
                 factory.getFilterQuery(fieldName, values[0]), size, sortOrder, orderBy));
         for(int i = 1; i < values.length; i++) {
             responseModel.addHits(repository.executeQuery(
-                            factory.getFilterQuery(fieldName, values[i]), size));
+                            factory.getFilterQuery(fieldName, values[i]), size, sortOrder, orderBy));
         }
         return responseModel;
     }
