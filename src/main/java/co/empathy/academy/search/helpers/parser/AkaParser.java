@@ -35,7 +35,7 @@ public class AkaParser {
     protected void loadAkas() {
         try {
             Aka aka = handleLine(bufferedReader.readLine());
-            while(actualAkas.isEmpty() || aka.getTconst().equals(actualAkas.get(0).getTconst())) {
+            while(actualAkas.isEmpty() || (aka != null && aka.getTconst().equals(actualAkas.get(0).getTconst()))) {
                 actualAkas.add(aka);
                 aka = handleLine(bufferedReader.readLine());
             }

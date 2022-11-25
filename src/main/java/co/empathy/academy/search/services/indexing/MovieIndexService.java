@@ -52,7 +52,6 @@ public class MovieIndexService {
             indexingRepository.synchronousBulkIndexing(
                     movies.stream().filter(m -> m != null).collect(Collectors.toList()));
             movies = movieParser.parseMovies(numMoviesPerExecution);
-            break;
         }
         return true;
     }
