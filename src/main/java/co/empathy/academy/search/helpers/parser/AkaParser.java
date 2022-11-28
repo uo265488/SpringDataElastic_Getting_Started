@@ -53,7 +53,11 @@ public class AkaParser {
     protected Movie getAkas(Movie movie) {
         Movie result = movie;
         if( movie != null || actualAkas.get(0).getTconst().equals(movie.getId())) {
-            result = movie.setAkas(actualAkas);
+            result = movie.setAkas(
+                    actualAkas.stream().map(a -> a.getTconst()).toArray(o -> new String[actualAkas.size()]),
+                    actualAkas.stream().map(a -> a.getTitle()).toArray(o -> new String[actualAkas.size()]),
+                    actualAkas.stream().map(a -> a.getRegion()).toArray(o -> new String[actualAkas.size()]),
+                    actualAkas.stream().map(a -> a.getLanguage()).toArray(o -> new String[actualAkas.size()]));
             this.actualAkas = new ArrayList<>();
             actualAkas.add(nextAka);
             loadAkas();

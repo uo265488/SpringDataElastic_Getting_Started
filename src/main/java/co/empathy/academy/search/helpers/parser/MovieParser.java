@@ -37,9 +37,13 @@ public class MovieParser extends BaseParser {
                     getGenres(fields[8]),
                     0,
                     0,
-                    new ArrayList<>(),
-                    new ArrayList<>(),
-                    new ArrayList<>());
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null);
 
         }
         return movie;

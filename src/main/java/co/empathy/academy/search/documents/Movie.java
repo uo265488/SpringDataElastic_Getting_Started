@@ -5,7 +5,6 @@ import co.empathy.academy.search.helpers.dto.RatingsDto;
 import lombok.*;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Value
@@ -30,11 +29,16 @@ public class Movie {
     private final List<String> genres;
     private final double averageRating;
     private final int numVotes;
-    List<Aka> akas;
 
-    List<Director> directors;
+    String[] akas_tconst;
+    String[] akas_title;
+    String[] akas_region;
+    String[] akas_language;
 
-    List<Star> starring;
+    String[] directors_nconst;
+
+    String[] starring_name_nconst;
+    String[] starring_characters;
 
     public String getId() {
         return this.id;
@@ -44,24 +48,35 @@ public class Movie {
     public Movie withRatings(RatingsDto ratings) {
         return new Movie(this.id, this.tconst, this.titleType, this.primaryTitle, this.originalTitle,
                 this.isAdult, this.startYear, this.endYear, this.runtimeMinutes, this.genres,
-                ratings.averageRating, ratings.numVotes, this.akas, this.directors, this.starring);
+                ratings.averageRating, ratings.numVotes, this.akas_tconst, akas_title, akas_region, akas_language,
+                directors_nconst,  starring_name_nconst, starring_characters);
     }
 
-    public Movie setAkas(List akas) {
+    public Movie setAkas(String[] akas_tconst, String[] akas_title, String[] akas_region, String[] akas_language) {
         return new Movie(this.id, this.tconst, this.titleType, this.primaryTitle, this.originalTitle,
                 this.isAdult, this.startYear, this.endYear, this.runtimeMinutes, this.genres,
-                this.averageRating, this.numVotes, akas, this.directors, this.starring);
+                this.averageRating, this.numVotes, akas_tconst, akas_title, akas_region, akas_language,
+                directors_nconst,  starring_name_nconst, starring_characters);
     }
 
-    public Movie setDirectors(List<Director> directors) {
+    public Movie setDirectors(String[] directors_nconst) {
         return new Movie(this.id, this.tconst, this.titleType, this.primaryTitle, this.originalTitle,
                 this.isAdult, this.startYear, this.endYear, this.runtimeMinutes, this.genres,
-                this.averageRating, this.numVotes, this.akas, new ArrayList<>(directors), this.starring);
+                this.averageRating, this.numVotes,  this.akas_tconst, akas_title, akas_region, akas_language,
+                directors_nconst,  starring_name_nconst, starring_characters);
     }
 
-    public Movie setStarring(List<Star> starring) {
+    public Movie setStarring(String[] starring_name_nconst, String[] starring_characters) {
         return new Movie(this.id, this.tconst, this.titleType, this.primaryTitle, this.originalTitle,
                 this.isAdult, this.startYear, this.endYear, this.runtimeMinutes, this.genres,
-                this.averageRating, this.numVotes, this.akas, this.directors, new ArrayList<>(starring));
+                this.averageRating, this.numVotes, this.akas_tconst, akas_title, akas_region, akas_language,
+                directors_nconst, starring_name_nconst, starring_characters);
+    }
+
+    public Movie setTconst(String s) {
+        return new Movie(s, s, this.titleType, this.primaryTitle, this.originalTitle,
+                this.isAdult, this.startYear, this.endYear, this.runtimeMinutes, this.genres,
+                this.averageRating, this.numVotes, this.akas_tconst, akas_title, akas_region, akas_language,
+                directors_nconst, starring_name_nconst, starring_characters);
     }
 }

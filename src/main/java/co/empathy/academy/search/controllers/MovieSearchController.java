@@ -98,4 +98,5 @@ public class MovieSearchController {
         return ResponseEntity.ok(
                 service.rangeQuery("runtimeMinutes", min, max, size, sortOrder.get(), orderBy.get()));
     }
+
 }

@@ -1,11 +1,5 @@
 {
       "properties": {
-            "id": {
-                  "type": "keyword"
-            },
-            "tconst": {
-                  "type": "keyword"
-            },
             "titleType": {
                   "type": "keyword"
             },
@@ -15,13 +9,7 @@
             "originalTitle": {
                   "type": "text"
             },
-            "isAdult": {
-                  "type": "boolean"
-            },
             "startYear": {
-                  "type": "integer"
-            },
-            "endYear": {
                   "type": "integer"
             },
             "runtimeMinutes": {
@@ -36,34 +24,12 @@
             "numVotes": {
                   "type": "integer"
             },
-            "akas": {
-                  "type": "nested",
-                  "properties": {
-                        "tconst": { "type" :  "keyword" },
-                        "title": { "type": "text" },
-                        "region": { "type": "keyword"},
-                        "language": { "type": "keyword"}
-                  }
-            },
-            "directors": {
-                  "type": "nested",
-                  "properties": {
-                        "nconst": { "type": "keyword" },
-                        "tconst": { "type": "keyword" }
-                  }
-            },
-            "starring": {
-                  "type": "nested",
-                  "properties": {
-                        "tconst": { "type": "keyword" },
-                        "name" : {
-                              "type": "nested",
-                              "properties" : {
-                                    "nconst": { "type": "keyword" }
-                              }
-                        },
-                        "characters": { "type": "text" }
-                  }
-            }
+            "akas_tconst": { "type" :  "keyword" },
+            "akas_title": { "type": "text" },
+            "akas_region": { "type": "keyword"},
+            "akas_language": { "type": "keyword"},
+            "directors_nconst": { "type": "keyword" },
+            "starring_name_nconst": { "type": "keyword" },
+            "starring_characters": { "type": "text" }
       }
 }

@@ -30,11 +30,15 @@ public class MovieIndexController {
         return ResponseEntity.ok(service.createIndex());
     }
 
-    /**
-     * Mapping for indexing movies
-     * @param
-     * @return response entity
-     */
+    @Operation(summary = "Index a list of documents")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "List of documents indexed successfully"),
+            @ApiResponse(responseCode = "500", description = "Error indexing the documents")
+    })
+    @Parameters(value = {
+            @Parameter(name = "basics", required = true, description = "Basics document"),
+            @Parameter(name = "ratings", required = false, description = "Ratings document, will be zipped with basics"),
+    })
     @PostMapping("/bulking")
     public ResponseEntity<Boolean> bulkIndexing(
             @RequestParam("file") MultipartFile titleBasics,

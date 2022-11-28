@@ -68,8 +68,20 @@ public class DirectorParser {
     protected Movie getDirectors(Movie movie) {
         Movie result = movie;
         if( movie != null && !actualDirectors.isEmpty()) {
-            if (actualDirectors.get(0).getTconst().equals(movie.getId())) {
-                result = movie.setDirectors(actualDirectors);
+            int tconst1Size = actualDirectors.get(0).getTconst().length();
+            int tconst2Size = movie.getTconst().length();
+            while(tconst2Size < tconst1Size) {
+                result = movie.setTconst(
+                        movie.getTconst().substring(0,2) +
+                                "0"  +
+                        movie.getTconst().substring(2)
+                );
+                tconst2Size++;
+            }
+            if (actualDirectors.get(0).getTconst().equals(result.getTconst())) {
+                result = movie.setDirectors(
+                        actualDirectors.stream().map(a -> a.getNconst())
+                                .toArray(o -> new String[actualDirectors.size()]));
                 this.actualDirectors = new ArrayList<>();
                 actualDirectors.add(nextDirector);
                 loadDirectors();
