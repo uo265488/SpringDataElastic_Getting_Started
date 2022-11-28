@@ -2,17 +2,15 @@ package co.empathy.academy.search.repositories.indexing;
 
 import co.elastic.clients.elasticsearch.core.BulkRequest;
 import co.elastic.clients.elasticsearch.core.BulkResponse;
-import co.elastic.clients.elasticsearch.core.IndexRequest;
 import co.elastic.clients.elasticsearch.core.IndexResponse;
-import co.elastic.clients.json.JsonData;
 import co.empathy.academy.search.config.ElasticsearchClientConfig;
 import co.empathy.academy.search.documents.Movie;
 import co.empathy.academy.search.helpers.Indices;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -81,10 +79,8 @@ public class MovieIndexRepository implements IndexRepository<Movie> {
         try {
             result = elasticsearchClientConfig.getEsClient().bulk(br.build());
         } catch (IOException e) {
+            LoggerFactory.getLogger(this.getClass()).error(e.getMessage());
             throw new RuntimeException(e.getMessage());
-        }
-        if (result.errors()) {
-            return new ArrayList<>();
         }
         return movieList;
     }
