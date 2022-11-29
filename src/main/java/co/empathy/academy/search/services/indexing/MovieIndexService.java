@@ -45,7 +45,7 @@ public class MovieIndexService {
         deleteRepository.deleteIndex();
         indexingRepository.createIndex();
 
-        int numMoviesPerExecution = 5000;
+        int numMoviesPerExecution = 50000;
         BaseParser movieParser = new MovieParser(titleBasics, ratings, akas, principals);
         List<Movie> movies = movieParser.parseMovies(numMoviesPerExecution);
         while(!movies.isEmpty()) {
