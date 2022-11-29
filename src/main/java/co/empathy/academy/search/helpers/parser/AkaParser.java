@@ -16,6 +16,7 @@ public class AkaParser {
 
     private List<Aka> actualAkas = new ArrayList<>();
     private Aka nextAka;
+    private boolean moreAkas;
 
     public AkaParser(MultipartFile akasFile) {
         try {
@@ -38,8 +39,10 @@ public class AkaParser {
             while(actualAkas.isEmpty() || (aka != null && aka.getTconst().equals(actualAkas.get(0).getTconst()))) {
                 actualAkas.add(aka);
                 aka = handleLine(bufferedReader.readLine());
+
             }
             nextAka = aka;
+            moreAkas = nextAka != null;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -52,7 +55,7 @@ public class AkaParser {
      */
     protected Movie getAkas(Movie movie) {
         Movie result = movie;
-        if( movie != null || actualAkas.get(0).getTconst().equals(movie.getId())) {
+        if(moreAkas && (movie != null || actualAkas.get(0).getTconst().equals(movie.getId()))) {
             result = movie.setAkas(
                     actualAkas.stream().map(a -> a.getTconst()).toArray(o -> new String[actualAkas.size()]),
                     actualAkas.stream().map(a -> a.getTitle()).toArray(o -> new String[actualAkas.size()]),

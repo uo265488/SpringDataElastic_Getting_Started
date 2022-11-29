@@ -49,8 +49,13 @@ public class MovieIndexService {
         BaseParser movieParser = new MovieParser(titleBasics, ratings, akas, principals);
         List<Movie> movies = movieParser.parseMovies(numMoviesPerExecution);
         while(!movies.isEmpty()) {
-            indexingRepository.synchronousBulkIndexing(
-                    movies.stream().filter(m -> m != null).collect(Collectors.toList()));
+            try {
+                indexingRepository.synchronousBulkIndexing(
+                        movies.stream().filter(m -> m != null).collect(Collectors.toList()));
+            } catch (RuntimeException e) {
+                return false;
+            }
+
             movies = movieParser.parseMovies(numMoviesPerExecution);
         }
         return true;
