@@ -56,7 +56,9 @@ public class MovieIndexService {
                 return false;
             }
 
-            movies = movieParser.parseMovies(numMoviesPerExecution);
+            break;
+
+            //movies = movieParser.parseMovies(numMoviesPerExecution);
         }
         return true;
     }
