@@ -3,6 +3,8 @@ package co.empathy.academy.search.repositories.searching;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 
+import java.util.List;
+
 public interface QueryFactory {
 
     /**
@@ -19,5 +21,9 @@ public interface QueryFactory {
      */
     Query getRangeQuery(String fieldName, double min, double max);
 
-
+    /**
+     * Creates the must query
+     * @return
+     */
+    Query getBoolQuery(List<Query> queries);
 }

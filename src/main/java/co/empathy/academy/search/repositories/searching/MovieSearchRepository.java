@@ -11,6 +11,7 @@ import co.empathy.academy.search.config.ElasticsearchClientConfig;
 import co.empathy.academy.search.documents.FieldAttr;
 import co.empathy.academy.search.helpers.Indices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.logging.LogLevel;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
@@ -18,6 +19,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 @Repository
 public class MovieSearchRepository implements SearchRepository {
@@ -37,6 +41,7 @@ public class MovieSearchRepository implements SearchRepository {
             response = elasticsearchClientConfig.getEsClient()
                     .search(getSearchRequest(query, size, sortOrder, sortBy), Object.class);
         } catch(IOException e) {
+            Logger.getAnonymousLogger().log(new LogRecord(Level.ALL, e.getMessage()));
             throw new RuntimeException(e.getMessage());
         }
         return response;

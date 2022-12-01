@@ -1,10 +1,13 @@
 package co.empathy.academy.search.repositories.searching;
 
+import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.MatchQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch._types.query_dsl.RangeQuery;
 import co.elastic.clients.json.JsonData;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class QueryFactoryImpl implements QueryFactory {
@@ -24,6 +27,11 @@ public class QueryFactoryImpl implements QueryFactory {
                 .lte(JsonData.of(max))
                 .gte(JsonData.of(min))
         )._toQuery();
+    }
+
+    @Override
+    public Query getBoolQuery(List<Query> queries) {
+        return BoolQuery.of(b -> b.filter(queries))._toQuery();
     }
 
 
