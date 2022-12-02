@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class StarringParser {
         private final BufferedReader bufferedReader;
@@ -71,8 +70,9 @@ public class StarringParser {
                 return new Star(
                         fields[0],
                         new Name(fields[2]),
-                        fields[5]
-
+                        !"\\N".equals(fields[5])
+                                ? fields[5].substring(2, fields[5].length() -2)
+                                : fields[5]
                 );
             }
             return null;

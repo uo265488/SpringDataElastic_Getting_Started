@@ -64,6 +64,7 @@ public class MovieSearchService {
 
     /**
      * Performs the filter query
+     *
      * @param type
      * @param genres
      * @param minScore
@@ -75,10 +76,11 @@ public class MovieSearchService {
      * @param size
      * @param sortOrder
      * @param sortBy
+     * @param sortRating
      * @return
      */
     public ResponseModel filterQuery(Optional<String> type,
-                                     Optional<String[]> genres,
+                                     Optional<String> genres,
                                      double minScore,
                                      double maxScore,
                                      int minYear,
@@ -87,7 +89,19 @@ public class MovieSearchService {
                                      Optional<Integer> maxMinutes,
                                      int size,
                                      Optional<String> sortOrder,
-                                     Optional<String> sortBy) {
+                                     Optional<String> sortBy,
+                                     Optional<String> sortRating) {
+
+        if(sortRating.isPresent())
+            return new ResponseModel(
+                    repository.executeQuery(
+                            factory.getBoolQuery(
+                                    getQueriesList(type, genres, minMinutes, minScore,
+                                            minYear, maxMinutes, maxScore, maxYear)),
+                            size,
+                            FieldAttr.Movie.RATING_FIELD,
+                            sortRating.get()));
+
 
         return new ResponseModel(
                 repository.executeQuery(
@@ -95,12 +109,12 @@ public class MovieSearchService {
                         getQueriesList(type, genres, minMinutes, minScore,
                                 minYear, maxMinutes, maxScore, maxYear)),
                 size,
-                sortBy.isPresent() ? sortBy.get() : "",
-                sortOrder.isPresent() ? sortOrder.get() : ""));
+                sortOrder.isPresent() ? sortOrder.get() : "",
+                sortBy.isPresent() ? sortBy.get() : ""));
     }
 
     private List<Query> getQueriesList(Optional<String> type,
-                                       Optional<String[]> genres,
+                                       Optional<String> genres,
                                        int minMinutes,
                                        double minScore,
                                        int minYear,
@@ -110,7 +124,7 @@ public class MovieSearchService {
         List<Query> queries = new ArrayList<>();
         if(type.isPresent()) queries.add(factory.getFilterQuery(FieldAttr.Movie.TITLE_TYPE_FIELD, type.get()));
         if(genres.isPresent())
-            Arrays.stream(genres.get()).forEach(g -> queries.add(factory.getFilterQuery(FieldAttr.Movie.GENRES_FIELD, g)));
+            Arrays.stream(genres.get().split(",")).forEach(g -> queries.add(factory.getFilterQuery(FieldAttr.Movie.GENRES_FIELD, g)));
         queries.add(
                 factory.getRangeQuery(FieldAttr.Movie.MINUTES_FIELD, minMinutes,
                         maxMinutes.isPresent()
@@ -119,8 +133,6 @@ public class MovieSearchService {
         queries.add(factory.getRangeQuery(FieldAttr.Movie.RATING_FIELD, minScore, maxScore));
         queries.add(factory.getRangeQuery(FieldAttr.Movie.START_YEAR_FIELD, minYear, maxYear.isPresent() ? maxYear.get() : Integer.MAX_VALUE));
 
-
-        System.out.println(queries);
         return queries;
     }
 }

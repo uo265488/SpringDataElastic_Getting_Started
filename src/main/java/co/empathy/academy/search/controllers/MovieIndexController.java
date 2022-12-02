@@ -17,15 +17,40 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/index")
+@RequestMapping("/")
 public class MovieIndexController {
     @Autowired
     private MovieIndexService service;
 
+    @Operation(summary = "Movie's bulk indexing")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Success. "),
+            @ApiResponse(responseCode = "500", description = "Error indexing movies. ")
+    })
+    @Parameters(value = {
+            @Parameter(name = "basics", required = true, description = "title.basics.tsv"),
+            @Parameter(name = "ratings", required = true, description = "title.ratings.tsv"),
+            @Parameter(name = "akas", required = true, description = "title.akas.tsv"),
+            @Parameter(name = "principals", required = true, description = "title.principals.tsv"),
+    })
+    @PostMapping("index")
+    public ResponseEntity bulkIndexing(
+            @RequestParam("file") MultipartFile basics,
+            @RequestParam("file2") MultipartFile ratings,
+            @RequestParam("file3") MultipartFile akas,
+            @RequestParam("file4") MultipartFile principals) {
+
+        boolean success = service.synchronousBulkIndexingMovies(basics, ratings, akas, principals);
+
+        return success
+                ? ResponseEntity.status(HttpStatus.CREATED).build()
+                : ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+
     /**
      * Indexing a movie document in the movie index
      */
-    @PostMapping("/index")
+    @PostMapping("/indexMovie")
     public ResponseEntity<String> indexMovie(@RequestBody Movie movie) {
 
         return ResponseEntity.ok(service.indexDocument(movie));
@@ -48,30 +73,7 @@ public class MovieIndexController {
                 : ResponseEntity.internalServerError().build();
     }
 
-    @Operation(summary = "Movie's bulk indexing")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Success. "),
-            @ApiResponse(responseCode = "500", description = "Error indexing movies. ")
-    })
-    @Parameters(value = {
-            @Parameter(name = "titleBasics", required = true, description = "title.basics.tsv"),
-            @Parameter(name = "ratings", required = true, description = "title.ratings.tsv"),
-            @Parameter(name = "akas", required = true, description = "title.akas.tsv"),
-            @Parameter(name = "principals", required = true, description = "title.principals.tsv"),
-    })
-    @PostMapping("/bulking")
-    public ResponseEntity bulkIndexing(
-            @RequestParam("file") MultipartFile titleBasics,
-            @RequestParam("file2") MultipartFile ratings,
-            @RequestParam("file3") MultipartFile akas,
-            @RequestParam("file4") MultipartFile principals) {
 
-        boolean success = service.synchronousBulkIndexingMovies(titleBasics, ratings, akas, principals);
-
-        return success
-                ? ResponseEntity.status(HttpStatus.CREATED).build()
-                : ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-    }
 
     @PostMapping
     public ResponseEntity<Movie> save(@RequestBody final Movie movie) {

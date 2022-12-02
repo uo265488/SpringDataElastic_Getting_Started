@@ -33,29 +33,34 @@ public class MovieSearchController {
             @Parameter(name = "maxScore", description = "Max value of the range. "),
             @Parameter(name = "size", description = "Number of documents in the response. Default = 100 "),
             @Parameter(name = "sortOrder", description = "ASC or DESC"),
+            @Parameter(name = "sortRating", description = "Sort rating ASC or DESC"),
             @Parameter(name = "sortBy", description = "condition to sort"),
     })
     @GetMapping("/search")
     public ResponseEntity<ResponseModel> filterQueryByType(
             @RequestParam Optional<String> type,
-            @RequestParam Optional<String[]> genres,
+            @RequestParam Optional<String> genres,
             @RequestParam(defaultValue = "0.0") double minScore,
             @RequestParam(defaultValue = "10.0") double maxScore,
             @RequestParam(defaultValue = "0") int minYear,
             @RequestParam Optional<Integer> maxYear,
             @RequestParam (defaultValue = "0") int minMinutes,
             @RequestParam Optional<Integer> maxMinutes,
-            @RequestParam(defaultValue = "100") int size,
+            @RequestParam(defaultValue = "100") int maxNHits,
+            @RequestParam Optional<String> sortRating,
             @RequestParam Optional<String> sortOrder,
             @RequestParam Optional<String> sortBy) {
 
-        if(incorrectSortParams(sortOrder, sortBy)) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        if(incorrectSortParams(sortRating, sortOrder, sortBy)) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         return ResponseEntity.ok(service.filterQuery(type, genres, minScore, maxScore, minYear, maxYear,
-                minMinutes, maxMinutes, size, sortOrder, sortBy));
+                minMinutes, maxMinutes, maxNHits, sortOrder, sortBy, sortRating));
     }
 
-    private boolean incorrectSortParams(Optional<String> sortOrder, Optional<String> sortBy) {
+    private boolean incorrectSortParams(Optional<String> sortRating, Optional<String> sortOrder, Optional<String> sortBy) {
+        if(sortRating.isPresent() && (!sortRating.get().equalsIgnoreCase("asc")
+        && !sortRating.get().equalsIgnoreCase("desc"))) return true;
         if(sortOrder.isEmpty() && sortBy.isPresent()) return true;
         if(sortOrder.isPresent() && sortBy.isEmpty()) return true;
         if(sortOrder.isPresent() && sortBy.isPresent() &&
