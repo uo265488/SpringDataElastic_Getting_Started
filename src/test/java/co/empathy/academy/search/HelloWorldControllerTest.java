@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @AutoConfigureMockMvc
 public class HelloWorldControllerTest {
 
-    @Autowired
+    /*@Autowired
     private MockMvc mvc;
 
     @Test
@@ -32,6 +32,8 @@ public class HelloWorldControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect((MockMvcResultMatchers.content().string("Hello mariano")));
     }
+
+     */
 
 
 
