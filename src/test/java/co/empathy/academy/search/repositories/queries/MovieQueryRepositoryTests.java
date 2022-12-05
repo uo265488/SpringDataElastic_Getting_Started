@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 public class MovieQueryRepositoryTests {
 
+    /*
     @Autowired
     private MockMvc mvc;
 
@@ -31,5 +32,7 @@ public class MovieQueryRepositoryTests {
     void givenQueryByTitle_whenExecuting_thenReturnsCorrectResults() throws Exception {
 
     }
+
+     */
 
 }
