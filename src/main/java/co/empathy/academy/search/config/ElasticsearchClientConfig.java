@@ -18,8 +18,8 @@ public class ElasticsearchClientConfig {
     @Bean
     public RestClient lowRestClient() {
 
-        RestClient restClient = RestClient.builder(
-                new HttpHost("localhost", 9200, "http")).build();
+        RestClient restClient = RestClient.builder(new HttpHost("localhost", 9200),
+                new HttpHost("elasticsearch", 9200)).build();
 
         return restClient;
     }

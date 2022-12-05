@@ -13,6 +13,7 @@ co/empathy/academy/search/repositories/searching/QueryFactory.class
 co/empathy/academy/search/repositories/searching/SearchRepository.class
 co/empathy/academy/search/services/searching/MovieSearchService.class
 co/empathy/academy/search/documents/FieldAttr$Movie.class
+co/empathy/academy/search/config/SecurityConfig.class
 co/empathy/academy/search/documents/Director.class
 co/empathy/academy/search/helpers/parser/DirectorParser.class
 co/empathy/academy/search/services/deleting/MovieDeleteService.class

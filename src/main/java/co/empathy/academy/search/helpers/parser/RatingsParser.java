@@ -31,6 +31,16 @@ public class RatingsParser {
      */
     public Movie readLine(Movie movie) {
         if(movie == null) return null;
+        int tconst1Size = actualLine.id.length();
+        int tconst2Size = movie.getTconst().length();
+        while(tconst2Size < tconst1Size) {
+            movie = movie.setTconst(
+                    movie.getTconst().substring(0,2) +
+                            "0"  +
+                            movie.getTconst().substring(2)
+            );
+            tconst2Size++;
+        }
         if(actualLine.getId().equals(movie.getId())) {
             try {
                 movie = movie.withRatings(this.actualLine);
