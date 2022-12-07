@@ -1,3 +1,4 @@
+/Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/config/SecurityConfig.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/documents/Facet.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/repositories/searching/SearchRepository.java
 /Users/oscarperez/Desktop/SpringDataElastic_Getting_Started/src/main/java/co/empathy/academy/search/repositories/searching/QueryFactoryImpl.java
